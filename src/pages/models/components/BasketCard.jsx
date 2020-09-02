@@ -3,7 +3,7 @@ import { Flex, ActivityIndicator, View, Button, InputItem, Modal, List, Toast } 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { FiSend } from 'react-icons/fi';
-import { PlusCircleOutlined, DeleteOutlined } from '@ant-design/icons';
+import { PlusCircleOutlined, DeleteOutlined,CloseCircleOutlined } from '@ant-design/icons';
 import {
     cencelSendBasketToDB, sendBasketToDB, addItemToBasket, closeModelMethod, removeItemFromBasket
 } from './../store/actions/index';
@@ -37,7 +37,7 @@ const BasketCard = (props) => {
                 return prices = prices + parseInt(value.price);
             })
             prices += parseInt(props.basketById.basket.dev_price);
-            let discount = totalPrice.discount ? totalPrice.discount : 0;
+            let discount = totalPrice.discount ? totalPrice.discount : parseInt(props.basketById.basket.discount);
             setTotalPrice(
                 {
                     ...totalPrice,
@@ -81,12 +81,12 @@ const BasketCard = (props) => {
                                             <Flex key={index} style={{ direction: "rtl" }} justify="between">
                                                 <span style={{ Flex: '7' }}>  {value.sub_name}  </span>
                                                 <View>
-                                                    <span onClick={checkEnableState() ? () =>
+                                                    <span onClick={props.basketById.basket.status !== '2'  ? () =>
                                                         props.removeItemFromBasket(
                                                             props.user.data.username, props.user.password,
                                                             value.bi_id, props.basketById.basket.id
                                                         ) : Toast.fail('هذه السلة مرسلة بالفعل ولاتستطيع التعديل')}><DeleteOutlined style={{ fontSize: '22px', marginLeft: '10px', marginRight: '10px' }} /></span>
-                                                    <span onClick={checkEnableState() ? () => props.addItemToBasket(
+                                                    <span onClick={props.basketById.basket.status !== '2'  ? () => props.addItemToBasket(
                                                         props.user.data.username, props.user.password,
                                                         value.product_id, props.basketById.basket.id, value.bi_id
                                                     ) : Toast.fail('هذه السلة مرسلة بالفعل ولاتستطيع التعديل')}><PlusCircleOutlined style={{ fontSize: '22px', marginLeft: '10px', marginRight: '10px' }} /></span>
@@ -106,19 +106,20 @@ const BasketCard = (props) => {
                                     type={'money'}
                                     placeholder=" خصم ان وجد"
                                     clear
+                                    defaultValue={parseInt(props.basketById.basket.discount)}
                                     onChange={(v) => changePrice(v)}
                                 />
                             </View>
                         </View>
                     </List.Item>
                     <List.Item>
-                        {props.basketById.basket.status === 2 ? <Button
+                        {props.basketById.basket.status !== '2' ? <Button
                             type="primary" style={{ fontSize: '16px' }}
                             onClick={() => onConfirmOrder()}><FiSend style={{ marginLeft: '8px', fontSize: '22px' }}
                             /> أرسال الطلب</Button> :
                             <Button
                                 type="warning" style={{ fontSize: '16px' }}
-                                onClick={() => props.cencelSendBasketToDB(props.user.data.username, props.user.password, props.basketById.basket.id)}><FiSend style={{ marginLeft: '8px', fontSize: '22px' }}
+                                onClick={() => props.cencelSendBasketToDB(props.user.data.username, props.user.password, props.basketById.basket.id)}><CloseCircleOutlined style={{ marginLeft: '8px', fontSize: '22px' }}
                                 /> الغاء</Button>
                         }
                     </List.Item>
