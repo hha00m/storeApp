@@ -97,7 +97,7 @@ class BasketsModel extends React.Component {
                                         ]}
                                     > <RadioItem key={index}
                                         checked={this.props.selectedBasket.id === i.id} onChange={() => { this.selectBasket(i) }}
-                                        disabled={this.props.all_selectedBaskets.includes(i.id)}
+                                        disabled={i.status==='2'}
                                     >
                                             <Flex>
                                                 <span style={{ marginLeft: "35px", marginRight: "35px" }}> {i.customer_name} - {i.customer_phone} - {i.city} - {i.total_price} </span>

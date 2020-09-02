@@ -36,8 +36,7 @@ export function fetchingBasketsMethod(username = "", password = "") {
 //-------------------------------------------------------------
 export function fetchingBasketByIDMethod(username = "", password = "", basket) {
   return function (dispatch) {
-    // let url = `http://localhost:8050/api/myBasket/getBasket?username=&password=12345678`;
-    let url = `https://albarqexpress.com/store/api/_getBasketByID.php?username=${username}&password=${password}&id=${basket}`;
+     let url = `https://albarqexpress.com/store/api/_getBasketByID.php?username=${username}&password=${password}&id=${basket}`;
     if (username.length > 0)
       axios
         .get(url)

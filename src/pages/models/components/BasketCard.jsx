@@ -3,9 +3,9 @@ import { Flex, ActivityIndicator, View, Button, InputItem, Modal, List, Toast } 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { FiSend } from 'react-icons/fi';
-import { PlusCircleOutlined, DeleteOutlined,CloseCircleOutlined } from '@ant-design/icons';
+import { PlusCircleOutlined, DeleteOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import {
-    cencelSendBasketToDB, sendBasketToDB, addItemToBasket, closeModelMethod, removeItemFromBasket
+    fetchingBasketByIDMethod,fetchingBasketsMethod, cencelSendBasketToDB, sendBasketToDB, addItemToBasket, closeModelMethod, removeItemFromBasket
 } from './../store/actions/index';
 
 const BasketCard = (props) => {
@@ -20,34 +20,56 @@ const BasketCard = (props) => {
 
     const onConfirmOrder = () => {
         props.sendBasketToDB(props.user.data.username, props.user.password, props.basketById.basket.id, totalPrice.discount);
+        onUpdate();
     }
-   
+    const onCencelationOrder = () => {
+        props.cencelSendBasketToDB(props.user.data.username, props.user.password, props.basketById.basket.id);
+        onUpdate();
+    }
     const changePrice = (v) => {
         let value = parseInt(v) ? parseInt(v) : 0;
         setTotalPrice({ ...totalPrice, total: totalPrice.original - value, discount: value, finishsd: true })
     }
+    const onUpdate = () => {
+        props.fetchingBasketByIDMethod(props.user.data.username, props.user.password, props.basketById.basket.id)
+    }
+    const onAddItem = (id, bi_id) => {
+        props.addItemToBasket(
+            props.user.data.username, props.user.password,
+            id, props.basketById.basket.id, bi_id
+        );
+        onUpdate();
 
-   
+    }
+    const onDeleteItem = (bi_id) => {
+        props.removeItemFromBasket(
+            props.user.data.username, props.user.password,
+            bi_id, props.basketById.basket.id
+        )
+        onUpdate();
+
+    }
     useEffect(() => {
         setTotalPrice({ total: 0, finishsd: false });
 
-    if (props.basketById.basket.items) {
-        let prices = 0;
-        props.basketById.basket.items.map((value, index) => {
-            return prices = prices + parseInt(value.price);
-        })
-        prices += parseInt(props.basketById.basket.dev_price);
-        let discount = totalPrice.discount ? totalPrice.discount : parseInt(props.basketById.basket.discount);
-        setTotalPrice(
-            {
-                ...totalPrice,
-                original: prices,
-                finishsd: true,
-                total: prices - discount
-            });
-    }
-   
-    }, [])
+        if (props.basketById.basket.items) {
+            let prices = 0;
+            props.basketById.basket.items.map((value, index) => {
+                return prices = prices + parseInt(value.price);
+            })
+            prices += parseInt(props.basketById.basket.dev_price);
+            let discount2 = parseInt(props.basketById.basket.discount) ? parseInt(props.basketById.basket.discount) : totalPrice.discount;
+            setTotalPrice(
+                {
+                    ...totalPrice,
+                    original: prices,
+                    finishsd: true,
+                    total: prices - discount2,
+                    discount: discount2
+                });
+        }
+
+    }, [props.basketById.basket.items])
     return (
         <Modal
             visible={props.ActiveModel.model.name === 'sendBasketModel' && props.ActiveModel.action}
@@ -55,7 +77,9 @@ const BasketCard = (props) => {
             maskClosable
             popup
             animationType="slide-down"
-            onClose={() => props.closeModelMethod(props.modelList[5])}
+            onClose={() =>{ props.fetchingBasketsMethod(props.user.data.username, props.user.password);
+                props.closeModelMethod(props.modelList[5]);
+            }}
 
         >
             {!props.basketById.basket.city_name ? <View style={{ width: '100%', height: document.documentElement.clientHeight * 0.1, display: 'flex', justifyContent: 'center' }}>
@@ -82,15 +106,14 @@ const BasketCard = (props) => {
                                             <Flex key={index} style={{ direction: "rtl" }} justify="between">
                                                 <span style={{ Flex: '7' }}>  {value.sub_name}  </span>
                                                 <View>
-                                                    <span onClick={props.basketById.basket.status !== '2'  ? () =>
-                                                        props.removeItemFromBasket(
-                                                            props.user.data.username, props.user.password,
-                                                            value.bi_id, props.basketById.basket.id
-                                                        ) : Toast.fail('هذه السلة مرسلة بالفعل ولاتستطيع التعديل')}><DeleteOutlined style={{ fontSize: '22px', marginLeft: '10px', marginRight: '10px' }} /></span>
-                                                    <span onClick={props.basketById.basket.status !== '2'  ? () => props.addItemToBasket(
-                                                        props.user.data.username, props.user.password,
-                                                        value.product_id, props.basketById.basket.id, value.bi_id
-                                                    ) : Toast.fail('هذه السلة مرسلة بالفعل ولاتستطيع التعديل')}><PlusCircleOutlined style={{ fontSize: '22px', marginLeft: '10px', marginRight: '10px' }} /></span>
+                                                    <span onClick={props.basketById.basket.status !== '2'
+                                                        ? () => onDeleteItem(value.bi_id)
+                                                        : () => Toast.fail('هذه السلة مرسلة بالفعل ولاتستطيع التعديل')}>
+                                                        <DeleteOutlined style={{ fontSize: '22px', marginLeft: '10px', marginRight: '10px' }} /></span>
+                                                    <span onClick={props.basketById.basket.status !== '2'
+                                                        ? () => onAddItem(value.product_id, value.bi_id)
+                                                        : () => Toast.fail('هذه السلة مرسلة بالفعل ولاتستطيع التعديل')}>
+                                                        <PlusCircleOutlined style={{ fontSize: '22px', marginLeft: '10px', marginRight: '10px' }} /></span>
                                                 </View>
                                             </Flex>
                                         </List.Item>
@@ -120,7 +143,7 @@ const BasketCard = (props) => {
                             /> أرسال الطلب</Button> :
                             <Button
                                 type="warning" style={{ fontSize: '16px' }}
-                                onClick={() => props.cencelSendBasketToDB(props.user.data.username, props.user.password, props.basketById.basket.id)}><CloseCircleOutlined style={{ marginLeft: '8px', fontSize: '22px' }}
+                                onClick={() => { onCencelationOrder() }}><CloseCircleOutlined style={{ marginLeft: '8px', fontSize: '22px' }}
                                 /> الغاء</Button>
                         }
                     </List.Item>
@@ -142,11 +165,13 @@ function mapStateToProps(state) {
 function matchDispatchToProps(dispatch) {
     return bindActionCreators(
         {
+            fetchingBasketByIDMethod: fetchingBasketByIDMethod,
             addItemToBasket: addItemToBasket,
             closeModelMethod: closeModelMethod,
             removeItemFromBasket: removeItemFromBasket,
             sendBasketToDB: sendBasketToDB,
-            cencelSendBasketToDB: cencelSendBasketToDB
+            cencelSendBasketToDB: cencelSendBasketToDB,
+            fetchingBasketsMethod:fetchingBasketsMethod
         }, dispatch);
 }
 export default connect(mapStateToProps, matchDispatchToProps)(BasketCard);
