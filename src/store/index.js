@@ -13,6 +13,7 @@ import selectedBasket from "../pages/models/store/reducer/active-basket-reducer"
 import all_selectedBaskets from "../pages/models/store/reducer/allSelectedBaskets";
 import userLogin from './../user/store-singin/reducers/singin-reducer'
 import actionsOnBaskets from '../pages/models/store/reducer/actions-model-reducer'
+import orders from '../pages/orders-tab/store/reducer/orders'
 const allReducers = combineReducers({
   cities: citiesReducer,
   activeCity: activeCityReducer,
@@ -28,5 +29,6 @@ const allReducers = combineReducers({
   user:userLogin,
   actionsBasket:actionsOnBaskets,
   basketById:basketById,
+  orders:orders
 });
 export default allReducers;

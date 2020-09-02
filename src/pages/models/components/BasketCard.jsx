@@ -21,32 +21,33 @@ const BasketCard = (props) => {
     const onConfirmOrder = () => {
         props.sendBasketToDB(props.user.data.username, props.user.password, props.basketById.basket.id, totalPrice.discount);
     }
-    const checkEnableState = () => {
-        return true;//!props.all_selectedBaskets.include((item) => item.id === props.selectedBasket.id);
-    }
+   
     const changePrice = (v) => {
         let value = parseInt(v) ? parseInt(v) : 0;
         setTotalPrice({ ...totalPrice, total: totalPrice.original - value, discount: value, finishsd: true })
     }
+
+   
     useEffect(() => {
         setTotalPrice({ total: 0, finishsd: false });
 
-        if (props.basketById.basket.items) {
-            let prices = 0;
-            props.basketById.basket.items.map((value, index) => {
-                return prices = prices + parseInt(value.price);
-            })
-            prices += parseInt(props.basketById.basket.dev_price);
-            let discount = totalPrice.discount ? totalPrice.discount : parseInt(props.basketById.basket.discount);
-            setTotalPrice(
-                {
-                    ...totalPrice,
-                    original: prices,
-                    finishsd: true,
-                    total: prices - discount
-                });
-        }
-    }, [props.basketById.basket.dev_price])
+    if (props.basketById.basket.items) {
+        let prices = 0;
+        props.basketById.basket.items.map((value, index) => {
+            return prices = prices + parseInt(value.price);
+        })
+        prices += parseInt(props.basketById.basket.dev_price);
+        let discount = totalPrice.discount ? totalPrice.discount : parseInt(props.basketById.basket.discount);
+        setTotalPrice(
+            {
+                ...totalPrice,
+                original: prices,
+                finishsd: true,
+                total: prices - discount
+            });
+    }
+   
+    }, [])
     return (
         <Modal
             visible={props.ActiveModel.model.name === 'sendBasketModel' && props.ActiveModel.action}
@@ -136,9 +137,6 @@ function mapStateToProps(state) {
         ActiveModel: state.ActiveModel,
         user: state.user.user,
         basketById: state.basketById,
-        all_selectedBaskets: state.all_selectedBaskets,
-
-
     }
 }
 function matchDispatchToProps(dispatch) {
