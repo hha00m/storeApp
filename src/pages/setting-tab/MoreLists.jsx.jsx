@@ -1,8 +1,8 @@
 import React from "react";
-import Header from './components/header-part/index';
-import Body from './components/body-part/index';
+import Header from './header/index';
+import Body from './body/index';
 import { View } from "antd-mobile";
-const OrdersTab = () => {
+const MoreTab = () => {
     return (
         <View>
             <Header />
@@ -12,4 +12,4 @@ const OrdersTab = () => {
 };
 
 
-export default OrdersTab;
+export default MoreTab;

@@ -3,13 +3,16 @@ import { TabBar, View, WingBlank } from 'antd-mobile';
 import Products from '../pages/product-tab/ProductsTab';
 import Orders from '../pages/orders-tab/OrdersTab';
 import Baskets from '../pages/basket-tab/BasketsTab';
-import Favourite from '../pages/TestTab';
+import Settings from './../pages/setting-tab/MoreLists.jsx';
+import Messages from './../pages/messages/MessagesTab.jsx';
 import { InputItem, List, Button, WhiteSpace } from "antd-mobile";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { singinWithServer } from './../user/store-singin/actions/actions'
 import './../user/style.css'
-import { ShoppingCartOutlined, ScheduleOutlined, MenuOutlined, AmazonOutlined } from '@ant-design/icons'
+import { FaBoxes } from 'react-icons/fa'
+import { CommentOutlined, ShoppingCartOutlined, MenuOutlined, AmazonOutlined } from '@ant-design/icons'
+// import {TiMessages} from 'react-icons/ti';
 class Menu extends React.Component {
     constructor(...args) {
         super(...args);
@@ -52,9 +55,9 @@ class Menu extends React.Component {
     }
 
     render() {
-       
+
         return (
-            !this.state.redirced?
+            !this.state.redirced ?
                 <WingBlank>
                     <List
                         style={{ direction: 'rtl', textAlign: 'right', marginTop: '100px', marginBottom: '50px' }}
@@ -145,14 +148,29 @@ class Menu extends React.Component {
                         >
                             <Baskets />
                         </TabBar.Item>
+
+                        <TabBar.Item
+                            icon={<CommentOutlined style={{ fontSize: '22px' }} />}
+                            selectedIcon={<CommentOutlined style={{ fontSize: '22px' }} />}
+                            title="محادثاتي"
+                            key="messages"
+                            selected={this.state.selectedTab === 'pinkTab'}
+                            onPress={() => {
+                                this.setState({
+                                    selectedTab: 'pinkTab',
+                                });
+                            }}
+                        >
+                            <Messages />
+                        </TabBar.Item>
                         <TabBar.Item
                             icon={
 
-                                <ScheduleOutlined style={{ fontSize: '22px' }} />
+                                <FaBoxes style={{ fontSize: '22px' }} />
 
                             }
                             selectedIcon={
-                                <ScheduleOutlined style={{ fontSize: '22px' }} />
+                                <FaBoxes style={{ fontSize: '22px' }} />
                             }
                             title="طلبياتي"
                             key="orders"
@@ -171,7 +189,7 @@ class Menu extends React.Component {
                             icon={<MenuOutlined style={{ fontSize: '22px' }} />}
                             selectedIcon={<MenuOutlined style={{ fontSize: '22px' }} />}
                             title="مزيد"
-                            key="favourite"
+                            key="more"
                             selected={this.state.selectedTab === 'yellowTab'}
                             onPress={() => {
                                 this.setState({
@@ -179,7 +197,7 @@ class Menu extends React.Component {
                                 });
                             }}
                         >
-                            <Favourite />
+                            <Settings />
                         </TabBar.Item>
                     </TabBar>
                 </View>

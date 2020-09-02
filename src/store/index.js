@@ -3,6 +3,7 @@ import activeCityReducer from "./baskets/reducer/reducer-active-city";
 import activeTownReducer from "./baskets/reducer/reducer-active-town";
 import citiesReducer from "./baskets/reducer/cities-reducer";
  import basketsList from "../pages/models/store/reducer/Baskets";
+ import basketById from "../pages/models/store/reducer/FetchBasketById_reducer";
 import productsList from "../pages/product-tab/store/reducer/products-reducer";
 import NewFlagList from "../pages/models/store/reducer/NewFlagList";
 import ModelList from "../pages/models/store/reducer/ModelList";
@@ -26,5 +27,6 @@ const allReducers = combineReducers({
   all_selectedBaskets:all_selectedBaskets,
   user:userLogin,
   actionsBasket:actionsOnBaskets,
+  basketById:basketById,
 });
 export default allReducers;

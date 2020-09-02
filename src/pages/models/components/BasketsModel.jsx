@@ -7,7 +7,7 @@ import { activeModelMethod, } from '../store/actions';
 import { closeModelMethod, } from '../store/actions';
 import {
     cencelSendBasketToDB, fetchingBasketsMethod, deleteBasketsMethod,
-    sendBasketToDB, selectedBasketMethod, addItemToBasket, all_selectedBasketsMethod
+    sendBasketToDB, selectedBasketMethod, addItemToBasket, all_selectedBasketsMethod, fetchingBasketByIDMethod
 } from './../store/actions/index';
 import './_style.css';
 const RadioItem = Radio.RadioItem;
@@ -20,6 +20,7 @@ class BasketsModel extends React.Component {
             this.props.fetchingBasket(this.props.user.data.username, this.props.user.password);
     }
     selectBasket = (val) => {
+        this.props.fetchingBasketByIDMethod(this.props.user.data.username, this.props.user.password,val.id)
         this.props.selectedBasketMethod(val)
     }
     render() {
@@ -116,7 +117,7 @@ class BasketsModel extends React.Component {
                                 type="primary" style={{ fontSize: '16px' }}
                                 onClick={() => this.props.addItemToBasket(
                                     this.props.user.data.username, this.props.user.password,
-                                    this.props.activeProduct, this.props.selectedBasket)
+                                    this.props.activeProduct.product.id, this.props.selectedBasket.id,this.props.activeProduct.product.attribute[0].id)
                                 }
                             ><ShoppingOutlined style={{ fontSize: '20px', marginLeft: "8px", marginRight: "8px" }} /> شراء  </Button>
                         </List.Item>
@@ -154,7 +155,8 @@ function matchDispatchToProps(dispatch) {
             cencelSendBasketToDB: cencelSendBasketToDB,
             selectedBasketMethod: selectedBasketMethod,
             addItemToBasket: addItemToBasket,
-            all_selectedBasketsMethod: all_selectedBasketsMethod
+            all_selectedBasketsMethod: all_selectedBasketsMethod,
+            fetchingBasketByIDMethod:fetchingBasketByIDMethod,
         }, dispatch);
 }
 export default connect(mapStateToProps, matchDispatchToProps)(BasketsModel);

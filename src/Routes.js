@@ -5,7 +5,8 @@ import ProductsTab from "./pages/product-tab/ProductsTab";
 import OrdersTab from "./pages/orders-tab/OrdersTab";
 import BasketsTab from "./pages/basket-tab/BasketsTab";
 import DrawerMenu from "./cores/Menu";
-import TestTab from "./pages/TestTab";
+import SettingTab from "./pages/setting-tab/MoreLists.jsx";
+import MessagesTab from "./pages/messages/MessagesTab";
 
 const Routes = () => {
   return (
@@ -14,9 +15,10 @@ const Routes = () => {
       <Switch>
         <Route path="/productsTab" exact component={ProductsTab} />
         <Route path="/ordersTab" exact component={OrdersTab} />
-        <Route path="/testTab" exact component={TestTab} />
+        <Route path="/settingsTab" exact component={SettingTab} />
         <Route path="/basketsTab" exact component={BasketsTab} />
         <Route path="/signin" exact component={Signin} />
+        <Route path="/messages" exact component={MessagesTab} />
       </Switch>
     </BrowserRouter>
   );

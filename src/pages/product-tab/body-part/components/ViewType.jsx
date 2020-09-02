@@ -2,6 +2,7 @@ import React from "react";
 import {WingBlank, SegmentedControl, View, WhiteSpace } from 'antd-mobile';
 import Grid from "./GridView";
 import List from "./ListView";
+import {AppstoreOutlined,BarsOutlined } from '@ant-design/icons'
 
 class ViewType extends React.Component {
     constructor(props) {
@@ -26,7 +27,7 @@ class ViewType extends React.Component {
                 <WhiteSpace size='sm'/>
                 <WingBlank>
                 <SegmentedControl
-                    values={['قوائم', 'شبكي']}
+                    values={[<BarsOutlined style={{fontSize:'22px'}}/>, <AppstoreOutlined style={{fontSize:'22px'}}/>]}
                     onChange={this.onChange}
                     onValueChange={this.onValueChange}
                 />

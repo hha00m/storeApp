@@ -7,9 +7,9 @@ class Nav extends React.Component {
 
     render() {
         return (
-            <NavBar
-                mode="light"
-            >المخزن</NavBar>
+            <NavBar mode="light">
+                المخزن
+            </NavBar>
         )
     }
 }

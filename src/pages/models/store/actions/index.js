@@ -1,5 +1,5 @@
 import axios from "axios";
-import {Toast} from 'antd-mobile'
+import { Toast } from "antd-mobile";
 export const activeModelMethod = (val) => {
   return {
     type: "ACTIVE_MODEL",
@@ -33,6 +33,26 @@ export function fetchingBasketsMethod(username = "", password = "") {
   };
 }
 
+//-------------------------------------------------------------
+export function fetchingBasketByIDMethod(username = "", password = "", basket) {
+  return function (dispatch) {
+    // let url = `http://localhost:8050/api/myBasket/getBasket?username=&password=12345678`;
+    let url = `https://albarqexpress.com/store/api/_getBasketByID.php?username=${username}&password=${password}&id=${basket}`;
+    if (username.length > 0)
+      axios
+        .get(url)
+        .then((response) => {
+          dispatch({
+            type: "FETCH_BASKET_BY_ID_FULFILLED",
+            payload: response.data.data,
+          });
+        })
+        .catch((err) => {
+          dispatch({ type: "FETCH_BASKET_BY_ID__REJECTED", payload: err });
+        });
+  };
+}
+
 export function deleteBasketsMethod(username = "", password = "", basketId) {
   return function (dispatch) {
     // let url = `http://localhost:8050/api/myBasket/getBasket?username=&password=12345678`;
@@ -41,7 +61,7 @@ export function deleteBasketsMethod(username = "", password = "", basketId) {
       axios
         .get(url)
         .then((response) => {
-          Toast.success(' تم ', 2, null, false);
+          Toast.success(" تم ", 2, null, false);
 
           dispatch({
             type: "REMOVE_BASKET_FROM_DB_FULFILLED",
@@ -62,7 +82,7 @@ export function createNewBasket(username = "", password = "", basket) {
       axios
         .get(url)
         .then((response) => {
-          Toast.success(' تم ', 2, null, false);
+          Toast.success(" تم ", 2, null, false);
           dispatch({
             type: "CREATE_NEW_BASKET_FULFILLED",
             payload: response.data.data,
@@ -76,39 +96,43 @@ export function createNewBasket(username = "", password = "", basket) {
 }
 
 //-------------------------------------------------------------
-export function addItemToBasket(username, password, product, basket) {
+export function addItemToBasket(username, password, product, basket, option) {
   return function (dispatch) {
     if (product && basket) {
-      const url = `https://albarqexpress.com/store/api/_addToBasket.php?username=${username}&password=${password}&product_id=${product.product.id}&option[]=${product.options.id}&basket=${basket.id}`;
+      const url = `https://albarqexpress.com/store/api/_addToBasket.php?username=${username}&password=${password}&product_id=${product}&option[]=${option}&basket=${basket}`;
       console.log(url);
-      axios.get(url).then((response) => {
-        Toast.success(' تم ', 2, null, false);
-        dispatch({
-          type: "ADD_ITEM_FROM_BASKET_FULFILLED",
-          payload: response.data.data,
+      axios
+        .get(url)
+        .then((response) => {
+          Toast.success(" تم ", 2, null, false);
+          dispatch({
+            type: "ADD_ITEM_TO_BASKET_FULFILLED",
+            payload: response.data.data,
+          });
+        })
+        .catch((err) => {
+          dispatch({ type: "ADD_ITEM_TO_BASKET_REJECTED", payload: err });
         });
-      }).catch((err) => {
-        dispatch({ type: "REMOVE_ITEM_FROM_BASKET_REJECTED", payload: err });
-      });
     }
   };
 }
 
-export function removeItemFromBasket() {
+export function removeItemFromBasket(username, password, product, basket) {
+  // option = option ? option : product.options.id;
   return function (dispatch) {
-    let url = `https://albarqexpress.com/store/api/_removeItemFromBasket.php?username=07822816693&password=12345678`;
-    // let url = `https://albarqexpress.com/store/api/_getBaskets.php?username=07822816693&password=12345678`;
+    const url = `https://albarqexpress.com/store/api/_deleteItemFromBasket.php?username=${username}&password=${password}&id=${product}&basket=${basket}`;
+    console.log(url);
     axios
       .get(url)
       .then((response) => {
-        Toast.success(' تم ', 2, null, false);
+        Toast.success(" تم ", 2, null, false);
         dispatch({
-          type: "ADD_ITEM_FROM_BASKET_FULFILLED",
+          type: "REMOVE_ITEM_FROM_BASKET_FULFILLED",
           payload: response.data,
         });
       })
       .catch((err) => {
-        dispatch({ type: "ADD_ITEM_FROM_BASKET_REJECTED", payload: err });
+        dispatch({ type: "REMOVE_ITEM_FROM_BASKET_REJECTED", payload: err });
       });
   };
 }
@@ -120,7 +144,7 @@ export function clearBasketFromItems() {
     axios
       .get(url)
       .then((response) => {
-        Toast.success(' تم ', 2, null, false);
+        Toast.success(" تم ", 2, null, false);
         dispatch({
           type: "CLEAR_BASKET_FROM_ITEMS_FULFILLED",
           payload: response.data,
@@ -139,7 +163,7 @@ export function AddTheFlagToListMethod(username, password, selectedFlag) {
       axios
         .get(url)
         .then((response) => {
-          Toast.success(' تم ', 2, null, false);
+          Toast.success(" تم ", 2, null, false);
           dispatch({
             type: "ADD_NEW_FLAG_TO_LIST_FULFILLED",
             payload: response.data,
@@ -152,17 +176,23 @@ export function AddTheFlagToListMethod(username, password, selectedFlag) {
 }
 
 //-------------------------------------------------------------
-export function sendBasketToDB(username = "", password = "", basketId) {
+export function sendBasketToDB(
+  username = "",
+  password = "",
+  basketId,
+  discount
+) {
   return function (dispatch) {
-    let url = `https://albarqexpress.com/store/api/_sendBasket.php?username=${username}&password=${password}&id=${basketId}`;
+    let url = `https://albarqexpress.com/store/api/_sendBasket.php?username=${username}&password=${password}&id=${basketId}&discount=${discount}`;
+    console.log(url);
     if (username.length > 0)
       axios
         .get(url)
         .then((response) => {
-          Toast.success(' تم ', 2, null, false);
+          Toast.success(" تم ", 2, null, false);
           dispatch({
             type: "SEND_BASKET_TO_DB_FULFILLED",
-            payload: response.data,
+            payload: response.data.data,
           });
         })
         .catch((err) => {
@@ -170,30 +200,48 @@ export function sendBasketToDB(username = "", password = "", basketId) {
         });
   };
 }
+//-------------------------------------------------------------
 export function cencelSendBasketToDB(username = "", password = "", basketId) {
-  if (username) {
-    return function (dispatch) {
-      // let url = `http://localhost:8050/api/myBasket/getBasket?username=&password=12345678`;
-      let url = `https://albarqexpress.com/store/api/_cancelBasket.php?username=${username}&password=${password}&id=${basketId}`;
-      if (username.length > 0)
-        axios
-          .get(url)
-          .then((response) => {
-            Toast.success(' تم ', 2, null, false);
-            dispatch({
-              type: "CENCEL_SEND_BASKET_TO_DB_FULFILLED",
-              payload: response.data,
-            });
-          })
-          .catch((err) => {
-            dispatch({
-              type: "CENCEL_SEND_BASKET_TO_DB_REJECTED",
-              payload: err,
-            });
+  return function (dispatch) {
+    let url = `https://albarqexpress.com/store/api/_cancelBasket.php?username=${username}&password=${password}&id=${basketId}`;
+    console.log(url);
+    if (username.length > 0)
+      axios
+        .get(url)
+        .then((response) => {
+          Toast.success(" تم ", 2, null, false);
+          dispatch({
+            type: "CENCEL_SEND_BASKET_TO_DB_FULFILLED",
+            payload: response.data.data,
           });
-    };
-  }
+        })
+        .catch((err) => {
+          dispatch({ type: "CENCEL_SEND_BASKET_TO_DB_REJECTED", payload: err });
+        });
+  };
 }
+// export function cencelSendBasketToDB(username = "", password = "", basketId) {
+//   if (username) {
+//     return function (dispatch) {
+//       let url = `https://albarqexpress.com/store/api/_cancelBasket.php?username=${username}&password=${password}&id=${basketId}`;
+//         axios
+//           .get(url)
+//           .then((response) => {
+//             Toast.success(" تم ", 2, null, false);
+//             dispatch({
+//               type: "CENCEL_SEND_BASKET_TO_DB_FULFILLED",
+//               payload: response.data,
+//             });
+//           })
+//           .catch((err) => {
+//             dispatch({
+//               type: "CENCEL_SEND_BASKET_TO_DB_REJECTED",
+//               payload: err,
+//             });
+//           });
+//     };
+//   }
+// }
 //---------------------------------------------
 export const selectedFlag = (val) => {
   return {
@@ -218,9 +266,8 @@ export const selectedBasketMethod = (val) => {
 
 //-------------------------------------------
 let selectedBaskets = [];
-export const all_selectedBasketsMethod = (val, addingState) => {
-  if (val && addingState) 
-    selectedBaskets.push(val.id);
+export const all_selectedBasketsMethod = (val, isSending) => {
+  if (val && isSending) selectedBaskets.push(val.id);
   else {
     const newList = selectedBaskets.filter((item) => item !== val.id);
     selectedBaskets = newList;

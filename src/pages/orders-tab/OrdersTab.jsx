@@ -1,8 +1,15 @@
-import React  from "react";
- 
+import React from "react";
+import Header from './components/header-part/index';
+import Body from './components/body-part/index';
+import { View } from "antd-mobile";
 const OrdersTab = () => {
-    return (<div>Hello signin page</div>)
-    };
+    return (
+        <View>
+            <Header />
+            <Body />
+        </View>
+    )
+};
 
-    
+
 export default OrdersTab;
