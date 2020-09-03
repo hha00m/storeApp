@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { FiSend } from 'react-icons/fi';
 import { PlusCircleOutlined, DeleteOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import {
-    fetchingBasketByIDMethod,fetchingBasketsMethod, cencelSendBasketToDB, sendBasketToDB, addItemToBasket, closeModelMethod, removeItemFromBasket
+    fetchingBasketByIDMethod, fetchingBasketsMethod, cencelSendBasketToDB, sendBasketToDB, addItemToBasket, closeModelMethod, removeItemFromBasket
 } from './../store/actions/index';
 
 const BasketCard = (props) => {
@@ -16,7 +16,7 @@ const BasketCard = (props) => {
             discount: 0,
             original: 0,
         });
-
+    const [isLoading, setIsLoading] = useState(true);
 
     const onConfirmOrder = () => {
         props.sendBasketToDB(props.user.data.username, props.user.password, props.basketById.basket.id, totalPrice.discount);
@@ -31,6 +31,7 @@ const BasketCard = (props) => {
         setTotalPrice({ ...totalPrice, total: totalPrice.original - value, discount: value, finishsd: true })
     }
     const onUpdate = () => {
+        setIsLoading(true);
         props.fetchingBasketByIDMethod(props.user.data.username, props.user.password, props.basketById.basket.id)
     }
     const onAddItem = (id, bi_id) => {
@@ -51,7 +52,7 @@ const BasketCard = (props) => {
     }
     useEffect(() => {
         setTotalPrice({ total: 0, finishsd: false });
-
+        setIsLoading(false);
         if (props.basketById.basket.items) {
             let prices = 0;
             props.basketById.basket.items.map((value, index) => {
@@ -75,14 +76,16 @@ const BasketCard = (props) => {
             visible={props.ActiveModel.model.name === 'sendBasketModel' && props.ActiveModel.action}
             transparent
             maskClosable
+            closable={true}
             popup
             animationType="slide-down"
-            onClose={() =>{ props.fetchingBasketsMethod(props.user.data.username, props.user.password);
+            onClose={() => {
+                props.fetchingBasketsMethod(props.user.data.username, props.user.password);
                 props.closeModelMethod(props.modelList[5]);
             }}
 
         >
-            {!props.basketById.basket.city_name ? <View style={{ width: '100%', height: document.documentElement.clientHeight * 0.1, display: 'flex', justifyContent: 'center' }}>
+            {isLoading? <View style={{ width: '100%', height: document.documentElement.clientHeight * 0.5, display: 'flex', justifyContent: 'center' }}>
                 <ActivityIndicator size="large" />
             </View> :
                 <List
@@ -171,7 +174,7 @@ function matchDispatchToProps(dispatch) {
             removeItemFromBasket: removeItemFromBasket,
             sendBasketToDB: sendBasketToDB,
             cencelSendBasketToDB: cencelSendBasketToDB,
-            fetchingBasketsMethod:fetchingBasketsMethod
+            fetchingBasketsMethod: fetchingBasketsMethod
         }, dispatch);
 }
 export default connect(mapStateToProps, matchDispatchToProps)(BasketCard);
