@@ -8,7 +8,8 @@ export function fetchingProductsMethod(
   pageIndex = 1,
   // limit = 20,
   // category = "",
-  data = []
+  data = [],
+  update=false
 ) {
   return function (dispatch) {
     let url = `https://albarqexpress.com/store/api/_products.php?username=${username}&password=${password}&limit=10&page=${pageIndex}`;
@@ -16,7 +17,10 @@ export function fetchingProductsMethod(
     // if (search) url += `&search=${search}`;
     // if (flag) url += `&flagList=${flag}`;
     // if (category) url += `&category=${category}`;
-    let data2 = sessionStorage.getItem(url);
+    
+    if(update) localStorage.removeItem(url);
+
+    let data2 = localStorage.getItem(url);
 
     switch (data2) {
       case null: {
@@ -24,7 +28,7 @@ export function fetchingProductsMethod(
           .get(url)
           .then((response) => {
             let obj = response.data.data;
-            sessionStorage.setItem(url, JSON.stringify(obj));
+            localStorage.setItem(url, JSON.stringify(obj));
 
             dispatch({
               type: "FETCH_PRODUCTS_FULFILLED",

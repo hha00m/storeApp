@@ -58,8 +58,8 @@ const BasketCard = (props) => {
             props.basketById.basket.items.map((value, index) => {
                 return prices = prices + parseInt(value.price);
             })
-            prices += parseInt(props.basketById.basket.dev_price);
-            let discount2 = parseInt(props.basketById.basket.discount) ? parseInt(props.basketById.basket.discount) : totalPrice.discount;
+            prices += props.basketById.basket.dev_price?parseInt(props.basketById.basket.dev_price):0;
+            let discount2 = props.basketById.basket.discount ? parseInt(props.basketById.basket.discount) : totalPrice.discount;
             setTotalPrice(
                 {
                     ...totalPrice,
@@ -80,7 +80,7 @@ const BasketCard = (props) => {
             popup
             animationType="slide-down"
             onClose={() => {
-                props.fetchingBasketsMethod(props.user.data.username, props.user.password);
+                props.fetchingBasketsMethod(props.user.data.username, props.user.password,true);
                 props.closeModelMethod(props.modelList[5]);
             }}
 

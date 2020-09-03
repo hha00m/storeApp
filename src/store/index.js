@@ -3,6 +3,7 @@ import activeCityReducer from "./baskets/reducer/reducer-active-city";
 import activeTownReducer from "./baskets/reducer/reducer-active-town";
 import citiesReducer from "./baskets/reducer/cities-reducer";
  import basketsList from "../pages/models/store/reducer/Baskets";
+ import newBasket from "../pages/models/store/reducer/create-new-basket-reducer";
  import basketById from "../pages/models/store/reducer/FetchBasketById_reducer";
 import productsList from "../pages/product-tab/store/reducer/products-reducer";
 import NewFlagList from "../pages/models/store/reducer/NewFlagList";
@@ -25,10 +26,11 @@ const allReducers = combineReducers({
   ActiveModel: ActiveModelReducer,
   activeProduct: ActiveProductReducer,
   selectedBasket:selectedBasket,
-  all_selectedBaskets:all_selectedBaskets,
   user:userLogin,
   actionsBasket:actionsOnBaskets,
   basketById:basketById,
-  orders:orders
+  orders:orders,
+  newBasket:newBasket,
+  // create_update_basket:create_update_basket,
 });
 export default allReducers;

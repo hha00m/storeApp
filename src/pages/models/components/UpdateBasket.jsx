@@ -5,7 +5,7 @@ import './_style.css';
 import { bindActionCreators } from 'redux';
 import { createForm } from 'rc-form';
 import { connect } from 'react-redux';
-import {  createNewBasket } from './../store/actions';
+import { createNewBasket, closeModelMethod,fetchingBasketsMethod } from './../store/actions';
 import CityModel from './CitiesModels';
 //----------------------------------------------------
 
@@ -15,13 +15,15 @@ class UpdateBasket extends React.Component {
     super(props);
     this.state = { ...this.state }
   }
-  
+  onUpdate = () => {
+    this.props.fetchingBasketsMethod(this.props.user.username, this.props.user.password, true)
+  }
 
   submit = () => {
     this.props.form.validateFields((error, value) => {
-      value['city']=this.props.activeCity.value;
-      value['town']=this.props.activeTown.value;
-      if(value.city && value.town &&value.phone){
+      value['city'] = this.props.activeCity.value;
+      value['town'] = this.props.activeTown.value;
+      if (value.city && value.town && value.phone) {
         this.props.createNewBasket(this.props.user.user.data.username, this.props.user.user.password, value);
       }
 
@@ -36,7 +38,7 @@ class UpdateBasket extends React.Component {
         <Modal
           popup
           visible={this.props.ActiveModel.model.name === 'EditBasketModel' && this.props.ActiveModel.action}
-          onClose={() => this.props.closeModelMethod(this.props.modelList[3])}
+          onClose={() => { this.onUpdate(); this.props.closeModelMethod(this.props.modelList[3]) }}
           animationType="slide-up"
         >
           <List className="my-list"
@@ -44,23 +46,27 @@ class UpdateBasket extends React.Component {
             renderHeader={() => 'أدخل معلومات المشتري'}>
             <InputItem
               clear
+              defaultValue={this.props.selectedBasket.customer_name}
               ref={el => this.autoFocusInst = el}
               {...getFieldProps('name')}
+
 
             >
               الاسم :</InputItem>
             <InputItem
               type="phone"
               placeholder="07x xxx xxxx"
+              defaultValue={this.props.selectedBasket.customer_phone}
               {...getFieldProps('phone')}
               style={{ direction: "ltr", paddingLeft: "8px", paddingRight: "8px" }}
             >الموبايل:
           </InputItem>
-            <CityModel />
+            <CityModel city={this.props.selectedBasket.city_id} town={this.props.selectedBasket.town_id}/>
             <TextareaItem
               {...getFieldProps('address')}
               title={"العنوان:"}
               rows={2}
+              defaultValue={this.props.selectedBasket.address?this.props.selectedBasket.address:''}
               count={100}
             />
 
@@ -86,7 +92,8 @@ function mapStateToProps(state) {
     activeTown: state.activeTown,
     modelList: state.modelList,
     ActiveModel: state.ActiveModel,
-    user:state.user,
+    user: state.user,
+    selectedBasket:state.selectedBasket
 
   }
 
@@ -94,9 +101,11 @@ function mapStateToProps(state) {
 
 function matchDispatchToProps(dispatch) {
   return bindActionCreators(
-      {
-     createNewBasket: createNewBasket,
-      }, dispatch);
+    {
+      createNewBasket: createNewBasket,
+      closeModelMethod: closeModelMethod,
+      fetchingBasketsMethod:fetchingBasketsMethod
+    }, dispatch);
 }
 const BasicInputExampleWrapper = createForm()(UpdateBasket);
-export default connect(mapStateToProps,matchDispatchToProps)(BasicInputExampleWrapper)
+export default connect(mapStateToProps, matchDispatchToProps)(BasicInputExampleWrapper)

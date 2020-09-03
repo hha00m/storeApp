@@ -16,12 +16,15 @@ const RadioItem = Radio.RadioItem;
 class BasketsModel extends React.Component {
     componentDidMount() {
         console.log(this.props.user.data);
-        if (this.props.user.data.username.length > 0)
-            this.props.fetchingBasket(this.props.user.data.username, this.props.user.password);
+        if (this.props.user.data.username)
+            this.props.fetchingBasketsMethod(this.props.user.data.username, this.props.user.password);
     }
     selectBasket = (val) => {
         this.props.fetchingBasketByIDMethod(this.props.user.data.username, this.props.user.password,val.id)
         this.props.selectedBasketMethod(val)
+    }
+     onUpdate = () => {
+        this.props.fetchingBasketsMethod(this.props.user.data.username, this.props.user.password,true)
     }
     render() {
         return (
@@ -34,7 +37,7 @@ class BasketsModel extends React.Component {
                     transparent
                     maskClosable={true}
                     wrapProps={{ onTouchStart: this.onWrapTouchStart }}
-                >
+                > 
                     <List
                         style={{ direction: "rtl", backgroundColor: 'white' }}
                         renderHeader={() =>
@@ -61,7 +64,7 @@ class BasketsModel extends React.Component {
                                                 text: 'الغاء التثبيت',
                                                 onPress: () => {
                                                     this.props.cencelSendBasketToDB(this.props.user.data.username, this.props.user.password, i.id);
-                                                    all_selectedBasketsMethod(i, false);
+                                                    this.onUpdate ();
                                                 }
                                                 // style: { backgroundColor: '#525266', color: 'white' },
                                             },
@@ -69,7 +72,7 @@ class BasketsModel extends React.Component {
                                                 text: 'حذف',
                                                 onPress: () => {
                                                     this.props.deleteBasketsMethod(this.props.user.data.username, this.props.user.password, i.id);
-                                                    all_selectedBasketsMethod(i, false);
+                                                    this.onUpdate ();
 
                                                 },
                                                 style: { backgroundColor: '#ff6666', color: 'white' },
@@ -146,8 +149,7 @@ function mapStateToProps(state) {
 function matchDispatchToProps(dispatch) {
     return bindActionCreators(
         {
-            fetchingBasketsMethod: dispatch(fetchingBasketsMethod()),
-            fetchingBasket: fetchingBasketsMethod,
+            fetchingBasketsMethod: fetchingBasketsMethod,
             activeModelMethod: activeModelMethod,
             deleteBasketsMethod: deleteBasketsMethod,
             closeModelMethod: closeModelMethod,

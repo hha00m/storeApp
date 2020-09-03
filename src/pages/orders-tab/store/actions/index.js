@@ -4,7 +4,7 @@ export function fetchingOrdersMethods(username = "", password = "") {
     return function (dispatch) {
       let url = `https://albarqexpress.com/store/api/_getOrders.php?username=${username}&password=${password}`;
       if (username.length > 0)
-        axios
+        axios 
           .get(url)
           .then((response) => {
             dispatch({

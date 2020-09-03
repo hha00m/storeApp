@@ -14,29 +14,53 @@ export const closeModelMethod = (val) => {
   };
 };
 //-------------------------------------------------------------
-export function fetchingBasketsMethod(username = "", password = "") {
+export function fetchingBasketsMethod(
+  username = "",
+  password = "",
+  update = false
+) { 
   return function (dispatch) {
-    // let url = `http://localhost:8050/api/myBasket/getBasket?username=&password=12345678`;
     let url = `https://albarqexpress.com/store/api/_getBaskets.php?username=${username}&password=${password}`;
-    if (username.length > 0)
-      axios
-        .get(url)
-        .then((response) => {
-          dispatch({
-            type: "FETCH_BASKETS_FULFILLED",
-            payload: response.data.data,
-          });
-        })
-        .catch((err) => {
-          dispatch({ type: "FETCH_BASKETS_REJECTED", payload: err });
-        });
+    if (username.length > 0) {
+      if(update) localStorage.removeItem('basketsList');
+
+      let data2 = localStorage.getItem("basketsList");
+
+      switch (data2) {
+        case null:
+          {
+            axios
+              .get(url)
+              .then((response) => {
+                let obj=response.data.data;
+                localStorage.setItem("basketsList", JSON.stringify(obj));
+                dispatch({
+                  type: "FETCH_BASKETS_FULFILLED",
+                  payload: obj,
+                });
+              })
+              .catch((err) => {
+                dispatch({ type: "FETCH_BASKETS_REJECTED", payload: err });
+              });
+          break;}
+          default: {
+            data2 = JSON.parse(data2);
+            dispatch({
+              type: "FETCH_BASKETS_FULFILLED",
+              payload: data2,
+            });
+          }
+          
+      }
+      
+    }
   };
 }
 
 //-------------------------------------------------------------
 export function fetchingBasketByIDMethod(username = "", password = "", basket) {
   return function (dispatch) {
-     let url = `https://albarqexpress.com/store/api/_getBasketByID.php?username=${username}&password=${password}&id=${basket}`;
+    let url = `https://albarqexpress.com/store/api/_getBasketByID.php?username=${username}&password=${password}&id=${basket}`;
     if (username.length > 0)
       axios
         .get(url)
@@ -76,7 +100,13 @@ export function createNewBasket(username = "", password = "", basket) {
   return function (dispatch) {
     // let url = `http://localhost:8050/api/myBasket/getBasket?username=&password=12345678`;
     if (basket && username.length > 0) {
-      let url = `https://albarqexpress.com/store/api/_createBasket.php/?username=${username}&password=${password}&town=${basket.town}&address=${basket.address}&note=${basket.note}&phone=${basket.phone}&name=${basket.name}&city=${basket.city}`;
+      let url = `https://albarqexpress.com/store/api/_createBasket.php/?username=${username}&password=${password}`;
+      if (basket.name) url += `&name=${basket.name}`;
+      if (basket.phone) url += `&phone=${basket.phone}`;
+      if (basket.city) url += `&city=${basket.city}`;
+      if (basket.town) url += `&town=${basket.town}`;
+      if (basket.address) url += `&address=${basket.address}`;
+      if (basket.note) url += `&note=${basket.note}`;
       console.log(url);
       axios
         .get(url)
@@ -219,28 +249,6 @@ export function cencelSendBasketToDB(username = "", password = "", basketId) {
         });
   };
 }
-// export function cencelSendBasketToDB(username = "", password = "", basketId) {
-//   if (username) {
-//     return function (dispatch) {
-//       let url = `https://albarqexpress.com/store/api/_cancelBasket.php?username=${username}&password=${password}&id=${basketId}`;
-//         axios
-//           .get(url)
-//           .then((response) => {
-//             Toast.success(" تم ", 2, null, false);
-//             dispatch({
-//               type: "CENCEL_SEND_BASKET_TO_DB_FULFILLED",
-//               payload: response.data,
-//             });
-//           })
-//           .catch((err) => {
-//             dispatch({
-//               type: "CENCEL_SEND_BASKET_TO_DB_REJECTED",
-//               payload: err,
-//             });
-//           });
-//     };
-//   }
-// }
 //---------------------------------------------
 export const selectedFlag = (val) => {
   return {

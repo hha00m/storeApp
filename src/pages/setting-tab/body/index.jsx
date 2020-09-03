@@ -2,8 +2,11 @@ import React from 'react';
 import { List } from 'antd-mobile';
 import { FaRegUserCircle } from 'react-icons/fa';
 import { GrNotification } from 'react-icons/gr';
-import {  AiOutlineLogout } from 'react-icons/ai';
-import {PieChartOutlined } from '@ant-design/icons'
+import { AiOutlineLogout } from 'react-icons/ai';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { activeModelMethod, } from '../../models/store/actions/index';
+// import { PieChartOutlined } from '@ant-design/icons'
 import '../style.css'
 const Item = List.Item;
 
@@ -15,23 +18,23 @@ class BodyMoreList extends React.Component {
     render() {
         return (<div >
 
-
             <List style={{ direction: 'rtl' }}
                 renderHeader={() => 'خيارات الحساب'}>
                 <Item
                     thumb={<FaRegUserCircle style={{ fontSize: '20px' }} />}
                     arrow="down"
-                    onClick={() => { }}
+                    onClick={() => this.props.activeModelMethod(this.props.modelList[10])
+                    }
                     style={{ direction: 'rtl' }}
                 >حسابي</Item>
-                <Item
+                {/* <Item
                     thumb={<PieChartOutlined style={{ fontSize: '22px' }} />}
                     onClick={() => { }}
                     arrow="down"
                     style={{ direction: 'rtl' }}
                 >
                     محفظتي
-                     </Item>
+                     </Item> */}
             </List>
 
             <List style={{ direction: 'rtl' }} renderHeader={() => 'مزيد'} className="my-list">
@@ -63,4 +66,19 @@ class BodyMoreList extends React.Component {
     }
 }
 
-export default BodyMoreList;
+function mapStateToProps(state) {
+    return {
+
+        modelList: state.modelList,
+        ActiveModel: state.ActiveModel,
+        user: state.user.user,
+    }
+}
+function matchDispatchToProps(dispatch) {
+    return bindActionCreators(
+        {
+            activeModelMethod: activeModelMethod,
+        }, dispatch);
+}
+export default connect(mapStateToProps, matchDispatchToProps)(BodyMoreList);
+

@@ -5,8 +5,7 @@ import './_style.css';
 import { bindActionCreators } from 'redux';
 import { createForm } from 'rc-form';
 import { connect } from 'react-redux';
-import {  createNewBasket } from './../store/actions';
-import {closeModelMethod} from './../store/actions/index'
+import {  createNewBasket,closeModelMethod,fetchingBasketsMethod } from './../store/actions';
 import CityModel from './CitiesModels';
 //----------------------------------------------------
 
@@ -16,10 +15,10 @@ class NewBasket extends React.Component {
     super(props);
     this.state = { ...this.state }
   }
-  // componentDidMount() {
-  //    this.autoFocusInst.focus();
-  // }
-
+  
+  onUpdate = () => {
+    this.props.fetchingBasketsMethod(this.props.user.username, this.props.user.password,true)
+}
   submit = () => {
     this.props.form.validateFields((error, value) => {
       value['city']=this.props.activeCity.value;
@@ -30,7 +29,7 @@ class NewBasket extends React.Component {
 
     });
   }
- 
+
   render() {
     const { getFieldProps } = this.props.form;
 
@@ -38,8 +37,12 @@ class NewBasket extends React.Component {
       <View>
         <Modal
           popup
+          closable={true}
           visible={this.props.ActiveModel.model.name === 'AddNewCustomer' && this.props.ActiveModel.action}
-          onClose={() => this.props.closeModelMethod(this.props.modelList[2])}
+          onClose={() => {
+            this.onUpdate();
+            this.props.closeModelMethod(this.props.modelList[2]);
+          }}
           animationType="slide-up"
         >
           <List className="my-list"
@@ -60,13 +63,11 @@ class NewBasket extends React.Component {
             >الموبايل:
           </InputItem>
             <CityModel />
-           
             <TextareaItem
               {...getFieldProps('address')}
               title={"العنوان:"}
               rows={2}
               count={100}
-              style={{border:' #ccc 1px solid'}}
             />
 
             <TextareaItem
@@ -74,12 +75,10 @@ class NewBasket extends React.Component {
               title={"ملاحظة:"}
               rows={2}
               count={100}
-              className='am-textarea-label'
-              style={{border:' #ccc 1px solid', textAlign:'right'}}
 
             />
             <List.Item>
-              <Button type="warning" onClick={this.submit} >أنشاء  <ContactsOutlined style={{ fontSize: '20px', marginLeft: "8px", marginRight: "8px" }} /></Button>
+              <Button type="warning" onClick={this.submit} >  <ContactsOutlined style={{ fontSize: '20px', marginLeft: "8px", marginRight: "8px" }} />انشاء</Button>
             </List.Item>
           </List>
         </Modal>
@@ -102,8 +101,10 @@ function mapStateToProps(state) {
 function matchDispatchToProps(dispatch) {
   return bindActionCreators(
       {
-        closeModelMethod:closeModelMethod,
-         createNewBasket: createNewBasket,
+     createNewBasket: createNewBasket,
+     closeModelMethod:closeModelMethod,
+     fetchingBasketsMethod:fetchingBasketsMethod
+
       }, dispatch);
 }
 const BasicInputExampleWrapper = createForm()(NewBasket);

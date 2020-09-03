@@ -5,11 +5,11 @@ const Header = () => {
         <View>
             <SearchBar placeholder="بحث" maxLength={8} />
             <WingBlank>
-            <Flex style={{ direction: 'rtl', height: '50px' }}>
+            <Flex style={{ direction: 'rtl', height: '50px',marginRight:'20px' }}>
                 <Flex.Item style={{ flex: '2' }}>رقم  </Flex.Item>
-                <Flex.Item style={{ flex: '4' }}>{"اسم "} </Flex.Item>
+                <Flex.Item style={{ flex: '3' }}>{"اسم "} </Flex.Item>
                 <Flex.Item style={{ flex: '2' }}>سعر</Flex.Item>
-                <Flex.Item style={{ flex: '2' }}>حالة الطلب</Flex.Item>
+                <Flex.Item style={{ flex: '3' }}>حالة الطلب</Flex.Item>
 
             </Flex>
             </WingBlank>

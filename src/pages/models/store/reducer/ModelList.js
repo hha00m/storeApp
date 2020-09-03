@@ -10,5 +10,7 @@ export default function () {
     { name: "filterCalledModel", id: 8 },
     { name: "none", id: 9 },
     { name: "CencelSendBasketModel", id: 10 },
+    { name: "MyAccountModel", id:12 },
+
   ];
 }
