@@ -1,15 +1,16 @@
 import axios from "axios";
+import { Toast } from "antd-mobile";
 
 export function fetchingProductsMethod(
-   username,
-   password,
+  username,
+  password,
   // search = "",
   // flag = "",
   pageIndex = 1,
   // limit = 20,
   // category = "",
   data = [],
-  update=false
+  update = false
 ) {
   return function (dispatch) {
     let url = `https://albarqexpress.com/store/api/_products.php?username=${username}&password=${password}&limit=10&page=${pageIndex}`;
@@ -17,9 +18,11 @@ export function fetchingProductsMethod(
     // if (search) url += `&search=${search}`;
     // if (flag) url += `&flagList=${flag}`;
     // if (category) url += `&category=${category}`;
-    
-    if(update) localStorage.removeItem(url);
-
+    if (navigator.onLine) {
+      if (update) localStorage.removeItem(url);
+    } else {
+      Toast.offline("لايوجد انترنيت حاول مجددا", 2, null, false);
+    }
     let data2 = localStorage.getItem(url);
 
     switch (data2) {

@@ -1,7 +1,7 @@
 /* eslint no-dupe-keys: 0, no-mixed-operators: 0 */
 import React from "react";
 import ReactDOM from "react-dom";
-import { ListView,ActivityIndicator,View } from "antd-mobile";
+import { PullToRefresh, ListView, ActivityIndicator, View, Toast } from "antd-mobile";
 import { fetchingProductsMethod } from '../../store/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -44,14 +44,21 @@ class Body extends React.Component {
       this._onDataArrived(this.props.products.products);
     }
   }
+  onRefresh = () => {
+    if (navigator.onLine) {
 
+      localStorage.clear();
+    } else {
+      Toast.offline('لايوجد انترنيت حاول مجددا', 2, null, false);
+    }
+  };
   onEndReached = event => {
     if (this.state.isLoading && !this.state.hasMore) {
       return;
     }
     this.setState({ isLoading: true });
     ++pageIndex;
-    this.props.fetchingProducts(this.props.user.user.data.username, this.props.user.user.password,pageIndex, this._data);
+    this.props.fetchingProducts(this.props.user.user.data.username, this.props.user.user.password, pageIndex, this._data);
 
     console.log("reach end", event);
   };
@@ -91,6 +98,10 @@ class Body extends React.Component {
         renderSeparator={separator}
 
         pageSize={4}
+        pullToRefresh={<PullToRefresh
+          refreshing={this.state.isLoading}
+          onRefresh={this.onRefresh}
+        />}
         scrollRenderAheadDistance={500}
         onEndReached={this.onEndReached}
         onEndReachedThreshold={10}
@@ -103,7 +114,7 @@ function mapStateToProps(state) {
   return {
 
     products: state.products,
-    user:state.user,
+    user: state.user,
 
   }
 }

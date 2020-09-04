@@ -22,7 +22,12 @@ export function fetchingBasketsMethod(
   return function (dispatch) {
     let url = `https://albarqexpress.com/store/api/_getBaskets.php?username=${username}&password=${password}`;
     if (username.length > 0) {
-      if(update) localStorage.removeItem('basketsList');
+      if (navigator.onLine) {
+        if(update) localStorage.removeItem('basketsList');
+      }
+      // else {
+      //   Toast.offline("لايوجد انترنيت حاول مجددا", 2, null, false);
+      // }
 
       let data2 = localStorage.getItem("basketsList");
 
