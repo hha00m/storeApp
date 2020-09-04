@@ -59,7 +59,7 @@ const BasketCard = (props) => {
                 return prices = prices + parseInt(value.price);
             })
             prices += props.basketById.basket.dev_price?parseInt(props.basketById.basket.dev_price):0;
-            let discount2 = props.basketById.basket.discount ? parseInt(props.basketById.basket.discount) : totalPrice.discount;
+            let discount2 = props.basketById.basket.discount ? parseInt(props.basketById.basket.discount) : 0;
             setTotalPrice(
                 {
                     ...totalPrice,
@@ -133,7 +133,7 @@ const BasketCard = (props) => {
                                     type={'money'}
                                     placeholder=" خصم ان وجد"
                                     clear
-                                    defaultValue={parseInt(props.basketById.basket.discount)}
+                                    defaultValue={parseInt(props.basketById.basket.discount)||0}
                                     onChange={(v) => changePrice(v)}
                                 />
                             </View>
