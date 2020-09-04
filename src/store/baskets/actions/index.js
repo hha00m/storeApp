@@ -9,13 +9,10 @@ export const activeCityMethod = (city_, cities_) => {
   };
 };
 
-export const activeTownMethod = (town_, towns_) => {
+export const activeTownMethod = (town_) => {
   return {
     type: "SELECTED_TOWN",
-    payload: {
-      town: town_,
-      towns: towns_,
-    },
+    payload: town_,
   };
 };
 

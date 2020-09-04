@@ -23,7 +23,7 @@ class NewBasket extends React.Component {
     this.props.form.validateFields((error, value) => {
       value['city']=this.props.activeCity.value;
       value['town']=this.props.activeTown.value;
-      if(value.city && value.town &&value.phone){
+      if(value.city && value.town && value.phone){
         this.props.createNewBasket(this.props.user.user.data.username, this.props.user.user.password, value);
       }
 

@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { TabBar, View, WingBlank } from 'antd-mobile';
 import Products from '../pages/product-tab/ProductsTab';
 import Orders from '../pages/orders-tab/OrdersTab';

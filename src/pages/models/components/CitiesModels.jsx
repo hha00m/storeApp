@@ -20,9 +20,8 @@ class CitiesModel extends React.Component {
         // console.log(this.props.activeCity);
     }
     onChangeTown = (v) => {
-        let i = v[0] - 1;
-        let val = this.props.activeCity.towns[i];
-        this.props.activeTownMethod(val, this.props.activeCity.towns);
+        let val = this.props.activeCity.towns.filter((town)=>town.value===v[0]);
+         this.props.activeTownMethod(val[0]);
     }
 
     render() {
@@ -44,7 +43,7 @@ class CitiesModel extends React.Component {
                         extra={this.props.activeTown.label}
                         onChange={v => this.onChangeTown(v)}
                         cols={1} className="forss">
-                        <List.Item extra={this.props.activeTown.label} arrow='empty' >المدينة</List.Item>
+                        <List.Item extra={this.props.activeTown} arrow='empty' >المدينة</List.Item>
                     </Picker>
 
                 </List>
