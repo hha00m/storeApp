@@ -29,7 +29,7 @@ export function fetchingBasketsMethod(
       //   Toast.offline("لايوجد انترنيت حاول مجددا", 2, null, false);
       // }
 
-      let data2 = localStorage.getItem("basketsList");
+      let data2 = null;//localStorage.getItem("basketsList");
 
       switch (data2) {
         case null:
