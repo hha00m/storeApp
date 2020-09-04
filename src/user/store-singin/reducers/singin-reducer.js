@@ -1,4 +1,3 @@
-
 export default function (
     state = {
       fetched: false,

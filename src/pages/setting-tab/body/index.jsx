@@ -1,11 +1,12 @@
 import React from 'react';
 import { List } from 'antd-mobile';
 import { FaRegUserCircle } from 'react-icons/fa';
-import { GrNotification } from 'react-icons/gr';
+import { GrNotification, GrLogout } from 'react-icons/gr';
 import { AiOutlineLogout } from 'react-icons/ai';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { activeModelMethod, } from '../../models/store/actions/index';
+import {logoutMethod} from './../../../user/store-singin/actions/actions'
 // import { PieChartOutlined } from '@ant-design/icons'
 import '../style.css'
 const Item = List.Item;
@@ -14,7 +15,6 @@ class BodyMoreList extends React.Component {
     state = {
         disabled: false,
     }
-
     render() {
         return (<div >
 
@@ -55,7 +55,7 @@ class BodyMoreList extends React.Component {
 
                 <Item
                     thumb={<AiOutlineLogout style={{ fontSize: '20px' }} />}
-                    onClick={() => { }}
+                    onClick={() => this.props.logoutMethod(true)}
                     style={{ direction: 'rtl' }}
                 >
                     تسجيل خروج
@@ -78,6 +78,7 @@ function matchDispatchToProps(dispatch) {
     return bindActionCreators(
         {
             activeModelMethod: activeModelMethod,
+            logoutMethod:logoutMethod
         }, dispatch);
 }
 export default connect(mapStateToProps, matchDispatchToProps)(BodyMoreList);

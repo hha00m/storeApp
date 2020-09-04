@@ -8,7 +8,7 @@ import Messages from './../pages/messages/MessagesTab.jsx';
 import { InputItem, List, Button, WhiteSpace } from "antd-mobile";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { singinWithServer } from './../user/store-singin/actions/actions'
+import { singinWithServer, logoutMethod } from './../user/store-singin/actions/actions'
 import './../user/style.css'
 import { FaBoxes } from 'react-icons/fa'
 import { CommentOutlined, ShoppingCartOutlined, MenuOutlined, AmazonOutlined } from '@ant-design/icons'
@@ -19,45 +19,27 @@ class Menu extends React.Component {
         this.state = {
             selectedTab: 'blueTab',
             hidden: false,
-            redirced: false,
-            Local_loading: false,
-            err: false,
             username: '',
             password: ''
-
         };
-        this.fetchData();
+        this.props.singinWithServer(this.state.username, this.state.password)
     }
 
-
+    // componentDidUpdate() {
+    //     if (this.props.user.user.data && this.props.logout.isLogout)
+    //         this.props.logoutMethod(false);
+    // }
     handleFieldChange = (e, fieldName) => {
         let data = this.state;
         data[fieldName] = e;
         this.setState(data);
     };
-    fetchData = () => {
 
-        let username = this.state.username;
-        let password = this.state.password;
-        this.props.singin(username, password);
-        this.setState({ ...this.state, redirced: false, loading: true, err: false });
-    }
-    onClickSinginButton() {
-        (this.state.username.length > 0 && this.state.password.length > 0)
-            ? this.fetchData()
-            : this.setState({ ...this.state, redirced: false, loading: false, err: true });
-    }
-
-    componentWillReceiveProps() {
-        this.props.user.user && this.props.user.fetched
-            ? this.setState({ ...this.state, redirced: true, loading: false })
-            : this.setState({ ...this.state, redirced: false, loading: false, err: true })
-    }
 
     render() {
 
         return (
-            !this.state.redirced ?
+            this.props.logout.isLogout || !(this.props.user.user.data) ?
                 <WingBlank>
                     <List
                         style={{ direction: 'rtl', textAlign: 'right', marginTop: '100px', marginBottom: '50px' }}
@@ -76,15 +58,17 @@ class Menu extends React.Component {
                             style={{ width: '100%', border: !this.state.err ? '' : 'red 1px solid' }}
                             onChange={(e) => this.handleFieldChange(e, "password")}
                         >
-                            {this.state.Local_loading ? 'loading' :
-                                'كلمة المرور'}
+                            {'كلمة المرور'}
+                            {/* {this.props.logout.isLogout?this.props.logoutMethod(false):''} */}
                         </InputItem>
                         <WhiteSpace size='xl' />
 
                         <Button
                             type="primary"
                             style={{ width: "80%", marginRight: "4px", margin: 'auto', boxShadow: '5px 4px 20px 2px grey' }}
-                            onClick={this.onClickSinginButton.bind(this)}
+                            onClick={() => {
+                                this.props.singinWithServer(this.state.username, this.state.password);
+                            }}
                         >
                             تسجيل دخول
       </Button>
@@ -209,13 +193,14 @@ class Menu extends React.Component {
 function mapStateToProps(state) {
     return {
         user: state.user,
+        logout: state.logout,
     }
 }
 function matchDispatchToProps(dispatch) {
     return bindActionCreators(
         {
-            singinWithServer: dispatch(singinWithServer()),
-            singin: singinWithServer,
+            singinWithServer: singinWithServer,
+            logoutMethod: logoutMethod,
         }, dispatch);
 }
 

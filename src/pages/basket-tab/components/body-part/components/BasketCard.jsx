@@ -3,7 +3,7 @@ import { Card, Flex, Stepper, View } from 'antd-mobile';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {
-    all_selectedBasketsMethod, closeModelMethod
+     closeModelMethod
 } from './../../../../models/store/actions/index'
 
 const BasketCard = (props) => {
@@ -66,7 +66,6 @@ function mapStateToProps(state) {
         ActiveModel: state.ActiveModel,
         user: state.user.user,
         selectedBasket: state.selectedBasket,
-        all_selectedBaskets: state.all_selectedBaskets,
 
     }
 }
