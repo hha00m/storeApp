@@ -10,13 +10,17 @@ const ProductCard = (props) => {
 
     const onPressedButton = (val) => {
         if (props.activeProduct.product) {
-            props.activeModelMethod(val);
+            if (props.activeProduct.product.id === obj.id) {
+                props.activeModelMethod(val);
+            } else {
+                Toast.fail('رجاء اختر خيار من نفس المنتج', 2, null, false);
+            }
         } else {
             if (obj.attribute.length < 1) {
                 props.activeProductMethod(obj);
                 props.activeModelMethod(val);
             } else
-                Toast.info('رجاء اختر خيار', 2, null, false);
+                Toast.info('رجاء اختر خيار قبل الشراء', 2, null, false);
 
         }
 
