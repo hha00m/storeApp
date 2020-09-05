@@ -5,10 +5,13 @@ import enUS from "antd-mobile/lib/locale-provider/en_US";
 import Route from "./Routes";
 import allReducers from "./store/index";
 import { Provider } from "react-redux";
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware ,compose} from "redux";
 import thunk from "redux-thunk";
 import * as serviceWorker from './serviceWorker';
-const store = createStore(allReducers, applyMiddleware(thunk));
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(allReducers,/* preloadedState, */ composeEnhancers( applyMiddleware(thunk)));
 
 ReactDOM.render(
   <Provider store={store}>

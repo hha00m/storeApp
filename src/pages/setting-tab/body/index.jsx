@@ -1,7 +1,7 @@
 import React from 'react';
 import { List } from 'antd-mobile';
 import { FaRegUserCircle } from 'react-icons/fa';
-import { GrNotification, GrLogout } from 'react-icons/gr';
+import { GrNotification } from 'react-icons/gr';
 import { AiOutlineLogout } from 'react-icons/ai';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';

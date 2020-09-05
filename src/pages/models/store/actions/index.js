@@ -129,6 +129,34 @@ export function createNewBasket(username = "", password = "", basket) {
   };
 }
 
+
+export function updateBasket(username = "", password = "", basket) {
+  return function (dispatch) {
+    if (basket && username.length > 0) {
+      let url = `https://albarqexpress.com/store/api/_updateBasket.php/?username=${username}&password=${password}&basket=${basket.id}`;
+      if (basket.name) url += `&customer_name=${basket.name}`;
+      if (basket.phone) url += `&customer_phone=${basket.phone}`;
+      if (basket.city) url += `&city_id=${basket.city}`;
+      if (basket.town) url += `&town_id=${basket.town}`;
+      if (basket.address) url += `&address=${basket.address}`;
+      if (basket.note) url += `&note=${basket.note}`;
+      console.log(url);
+      axios
+        .get(url)
+        .then((response) => {
+          Toast.success(" تم ", 2, null, false);
+          dispatch({
+            type: "UPDATE_BASKET_FULFILLED",
+            payload: response.data.data,
+          });
+        })
+        .catch((err) => {
+          dispatch({ type: "UPDATE_BASKET_REJECTED", payload: err });
+        });
+    }
+  };
+}
+
 //-------------------------------------------------------------
 export function addItemToBasket(username, password, product, basket, option) {
   return function (dispatch) {

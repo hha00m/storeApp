@@ -58,7 +58,7 @@ const BasketCard = (props) => {
             props.basketById.basket.items.map((value, index) => {
                 return prices = prices + parseInt(value.price);
             })
-            prices += props.basketById.basket.dev_price?parseInt(props.basketById.basket.dev_price):0;
+            prices += props.basketById.basket.dev_price ? parseInt(props.basketById.basket.dev_price) : 0;
             let discount2 = props.basketById.basket.discount ? parseInt(props.basketById.basket.discount) : 0;
             setTotalPrice(
                 {
@@ -80,12 +80,12 @@ const BasketCard = (props) => {
             popup
             animationType="slide-down"
             onClose={() => {
-                props.fetchingBasketsMethod(props.user.data.username, props.user.password,true);
+                props.fetchingBasketsMethod(props.user.data.username, props.user.password, true);
                 props.closeModelMethod(props.modelList[5]);
             }}
 
         >
-            {isLoading? <View style={{ width: '100%', height: document.documentElement.clientHeight * 0.5, display: 'flex', justifyContent: 'center' }}>
+            {isLoading ? <View style={{ width: '100%', height: document.documentElement.clientHeight * 0.5, display: 'flex', justifyContent: 'center' }}>
                 <ActivityIndicator size="large" />
             </View> :
                 <List
@@ -133,7 +133,7 @@ const BasketCard = (props) => {
                                     type={'money'}
                                     placeholder=" خصم ان وجد"
                                     clear
-                                    defaultValue={parseInt(props.basketById.basket.discount)||0}
+                                    defaultValue={parseInt(props.basketById.basket.discount) || 0}
                                     onChange={(v) => changePrice(v)}
                                 />
                             </View>

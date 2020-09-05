@@ -5,7 +5,7 @@ import './_style.css';
 import { bindActionCreators } from 'redux';
 import { createForm } from 'rc-form';
 import { connect } from 'react-redux';
-import {  createNewBasket,closeModelMethod,fetchingBasketsMethod } from './../store/actions';
+import { createNewBasket, closeModelMethod, fetchingBasketsMethod } from './../store/actions';
 import CityModel from './CitiesModels';
 //----------------------------------------------------
 
@@ -15,15 +15,15 @@ class NewBasket extends React.Component {
     super(props);
     this.state = { ...this.state }
   }
-  
+
   onUpdate = () => {
-    this.props.fetchingBasketsMethod(this.props.user.username, this.props.user.password,true)
-}
+    this.props.fetchingBasketsMethod(this.props.user.username, this.props.user.password, true)
+  }
   submit = () => {
     this.props.form.validateFields((error, value) => {
-      value['city']=this.props.activeCity.value;
-      value['town']=this.props.activeTown.value;
-      if(value.city && value.town && value.phone){
+      value['city'] = this.props.activeCity.value;
+      value['town'] = this.props.activeTown.value;
+      if (value.city && value.town && value.phone) {
         this.props.createNewBasket(this.props.user.user.data.username, this.props.user.user.password, value);
       }
 
@@ -40,7 +40,7 @@ class NewBasket extends React.Component {
           closable={true}
           visible={this.props.ActiveModel.model.name === 'AddNewCustomer' && this.props.ActiveModel.action}
           onClose={() => {
-            this.onUpdate();
+            this.props.fetchingBasketsMethod(this.props.user.username, this.props.user.password, true)
             this.props.closeModelMethod(this.props.modelList[2]);
           }}
           animationType="slide-up"
@@ -92,7 +92,7 @@ function mapStateToProps(state) {
     activeTown: state.activeTown,
     modelList: state.modelList,
     ActiveModel: state.ActiveModel,
-    user:state.user,
+    user: state.user,
 
   }
 
@@ -100,12 +100,12 @@ function mapStateToProps(state) {
 
 function matchDispatchToProps(dispatch) {
   return bindActionCreators(
-      {
-     createNewBasket: createNewBasket,
-     closeModelMethod:closeModelMethod,
-     fetchingBasketsMethod:fetchingBasketsMethod
+    {
+      createNewBasket: createNewBasket,
+      closeModelMethod: closeModelMethod,
+      fetchingBasketsMethod: fetchingBasketsMethod
 
-      }, dispatch);
+    }, dispatch);
 }
 const BasicInputExampleWrapper = createForm()(NewBasket);
-export default connect(mapStateToProps,matchDispatchToProps)(BasicInputExampleWrapper)
+export default connect(mapStateToProps, matchDispatchToProps)(BasicInputExampleWrapper)

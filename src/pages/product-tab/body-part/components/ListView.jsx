@@ -46,7 +46,6 @@ class Body extends React.Component {
   }
   onRefresh = () => {
     if (navigator.onLine) {
-
       localStorage.clear();
     } else {
       Toast.offline('لايوجد انترنيت حاول مجددا', 2, null, false);

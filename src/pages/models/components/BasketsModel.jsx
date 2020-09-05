@@ -1,5 +1,5 @@
 import React from "react";
-import { ActivityIndicator, Modal, View, List, Flex, WhiteSpace, SwipeAction, Button, Radio } from 'antd-mobile';
+import { ActivityIndicator, Modal, View, List, Flex, WhiteSpace, Toast, SwipeAction, Button, Radio } from 'antd-mobile';
 import { ShoppingOutlined, PlusCircleOutlined } from '@ant-design/icons'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -20,11 +20,11 @@ class BasketsModel extends React.Component {
             this.props.fetchingBasketsMethod(this.props.user.data.username, this.props.user.password);
     }
     selectBasket = (val) => {
-        this.props.fetchingBasketByIDMethod(this.props.user.data.username, this.props.user.password,val.id)
+        this.props.fetchingBasketByIDMethod(this.props.user.data.username, this.props.user.password, val.id)
         this.props.selectedBasketMethod(val)
     }
-     onUpdate = () => {
-        this.props.fetchingBasketsMethod(this.props.user.data.username, this.props.user.password,true)
+    onUpdate = () => {
+        this.props.fetchingBasketsMethod(this.props.user.data.username, this.props.user.password, true)
     }
     render() {
         return (
@@ -37,7 +37,7 @@ class BasketsModel extends React.Component {
                     transparent
                     maskClosable={true}
                     wrapProps={{ onTouchStart: this.onWrapTouchStart }}
-                > 
+                >
                     <List
                         style={{ direction: "rtl", backgroundColor: 'white' }}
                         renderHeader={() =>
@@ -64,16 +64,18 @@ class BasketsModel extends React.Component {
                                                 text: 'الغاء التثبيت',
                                                 onPress: () => {
                                                     this.props.cencelSendBasketToDB(this.props.user.data.username, this.props.user.password, i.id);
-                                                    this.onUpdate ();
-                                                }
-                                                // style: { backgroundColor: '#525266', color: 'white' },
+                                                    this.onUpdate();
+                                                },
+                                                style: { backgroundColor: '#525266', color: 'white' },
                                             },
                                             {
                                                 text: 'حذف',
                                                 onPress: () => {
-                                                    this.props.deleteBasketsMethod(this.props.user.data.username, this.props.user.password, i.id);
-                                                    this.onUpdate ();
-
+                                                    if (i.status === '2') Toast.fail('السلة مثبتة ولاتستطيع حذفها');
+                                                    else {
+                                                        this.props.deleteBasketsMethod(this.props.user.data.username, this.props.user.password, i.id);
+                                                        this.onUpdate();
+                                                    }
                                                 },
                                                 style: { backgroundColor: '#ff6666', color: 'white' },
 
@@ -83,10 +85,11 @@ class BasketsModel extends React.Component {
                                             {
                                                 text: 'تثبيت الطلب',
                                                 onPress: () => {
-
-                                                    this.selectBasket(i);
-                                                    this.props.activeModelMethod(this.props.modelList[5])
-
+                                                    if (i.status === '2') Toast.fail('السلة مثبتة بالفعل');
+                                                    else {
+                                                        this.selectBasket(i);
+                                                        this.props.activeModelMethod(this.props.modelList[5])
+                                                    }
                                                 },
                                                 style: { backgroundColor: '#108ee9', color: 'white' },
 
@@ -100,7 +103,7 @@ class BasketsModel extends React.Component {
                                         ]}
                                     > <RadioItem key={index}
                                         checked={this.props.selectedBasket.id === i.id} onChange={() => { this.selectBasket(i) }}
-                                        disabled={i.status==='2'}
+                                        disabled={i.status === '2'}
                                     >
                                             <Flex>
                                                 <span style={{ marginLeft: "35px", marginRight: "35px" }}> {i.customer_name} - {i.customer_phone} - {i.city_name} - {i.town_name} </span>
@@ -120,7 +123,7 @@ class BasketsModel extends React.Component {
                                 type="primary" style={{ fontSize: '16px' }}
                                 onClick={() => this.props.addItemToBasket(
                                     this.props.user.data.username, this.props.user.password,
-                                    this.props.activeProduct.product.id, this.props.selectedBasket.id,this.props.activeProduct.product.attribute[0].id)
+                                    this.props.activeProduct.product.id, this.props.selectedBasket.id, this.props.activeProduct.product.attribute[0].id)
                                 }
                             ><ShoppingOutlined style={{ fontSize: '20px', marginLeft: "8px", marginRight: "8px" }} /> شراء  </Button>
                         </List.Item>
@@ -158,7 +161,7 @@ function matchDispatchToProps(dispatch) {
             selectedBasketMethod: selectedBasketMethod,
             addItemToBasket: addItemToBasket,
             all_selectedBasketsMethod: all_selectedBasketsMethod,
-            fetchingBasketByIDMethod:fetchingBasketByIDMethod,
+            fetchingBasketByIDMethod: fetchingBasketByIDMethod,
         }, dispatch);
 }
 export default connect(mapStateToProps, matchDispatchToProps)(BasketsModel);
