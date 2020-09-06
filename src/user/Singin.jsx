@@ -70,7 +70,9 @@ function Singin(props) {
           >
             تسجيل دخول
       </Button>
-        </List>
+      <WhiteSpace size='xl' />
+      <WhiteSpace size='xl' />
+              </List>
       </LocaleProvider>
 
   );

@@ -1,6 +1,6 @@
 import React from 'react';
 import utf8 from 'utf8';
-import { List, Button, InputItem, TextareaItem, View, Modal } from 'antd-mobile';
+import { List, Button, InputItem, TextareaItem, View, Modal, Toast } from 'antd-mobile';
 import { ContactsOutlined } from '@ant-design/icons';
 import './_style.css';
 import { bindActionCreators } from 'redux';
@@ -8,7 +8,6 @@ import { createForm } from 'rc-form';
 import { connect } from 'react-redux';
 import { updateBasketMethod, closeModelMethod, fetchingBasketsMethod } from './../store/actions';
 import CityModel from './CitiesModels';
-import uuid from 'react-uuid'
 
 
 const UpdateCard = (props) => {
@@ -18,14 +17,14 @@ const UpdateCard = (props) => {
             value['city'] = props.activeCity.value ? props.activeCity.value : props.selectedBasket.city_id;
             value['town'] = props.activeTown.value ? props.activeTown.value : props.selectedBasket.town_id;
             value['phone'] = value['phone'] ? value['phone'] : props.selectedBasket.customer_phone;
-            value['name'] = utf8.encode(value['name'] ? value['name'] : props.selectedBasket.customer_name);
-            value['address'] = utf8.encode(value['address'] ? value['address'] : props.selectedBasket.address);
-            value['note'] = utf8.encode(value['note'] ? value['note'] : props.selectedBasket.note);
+            value['name'] = (value['name'] ? value['name'] : props.selectedBasket.customer_name);
+            value['address'] = (value['address'] ? value['address'] : props.selectedBasket.address);
+            value['note'] = (value['note'] ? value['note'] : props.selectedBasket.note);
 
-            value['id'] = props.selectedBasket.basket_id;
+            value['id'] = props.selectedBasket.id;
             if (value.city && value.town && value.phone) {
                 props.updateBasketMethod(props.user.user.data.username, props.user.user.password, value);
-            }
+            }else Toast.fail('خطاء بالادخال')
 
         });
     }
