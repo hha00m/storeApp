@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Toast } from "antd-mobile";
+import {API} from '../../../../config';
 export const activeModelMethod = (val) => {
   return {
     type: "ACTIVE_MODEL",
@@ -20,7 +21,7 @@ export function fetchingBasketsMethod(
   update = false
 ) { 
   return function (dispatch) {
-    let url = `https://albarqexpress.com/store/api/_getBaskets.php?username=${username}&password=${password}`;
+    let url = `${API}/_getBaskets.php?username=${username}&password=${password}`;
     if (username.length > 0) {
       if (navigator.onLine) {
         if(update) localStorage.removeItem('basketsList');
@@ -65,7 +66,7 @@ export function fetchingBasketsMethod(
 //-------------------------------------------------------------
 export function fetchingBasketByIDMethod(username = "", password = "", basket) {
   return function (dispatch) {
-    let url = `https://albarqexpress.com/store/api/_getBasketByID.php?username=${username}&password=${password}&id=${basket}`;
+    let url = `${API}/_getBasketByID.php?username=${username}&password=${password}&id=${basket}`;
     if (username.length > 0)
       axios
         .get(url)
@@ -83,8 +84,7 @@ export function fetchingBasketByIDMethod(username = "", password = "", basket) {
 
 export function deleteBasketsMethod(username = "", password = "", basketId) {
   return function (dispatch) {
-    // let url = `http://localhost:8050/api/myBasket/getBasket?username=&password=12345678`;
-    let url = `https://albarqexpress.com/store/api/_deleteBasket.php?username=${username}&password=${password}&id=${basketId}`;
+    let url = `${API}/_deleteBasket.php?username=${username}&password=${password}&id=${basketId}`;
     if (username.length > 0)
       axios
         .get(url)
@@ -103,9 +103,8 @@ export function deleteBasketsMethod(username = "", password = "", basketId) {
 }
 export function createNewBasket(username = "", password = "", basket) {
   return function (dispatch) {
-    // let url = `http://localhost:8050/api/myBasket/getBasket?username=&password=12345678`;
     if (basket && username.length > 0) {
-      let url = `https://albarqexpress.com/store/api/_createBasket.php/?username=${username}&password=${password}`;
+      let url = `${API}/_createBasket.php/?username=${username}&password=${password}`;
       if (basket.name) url += `&name=${basket.name}`;
       if (basket.phone) url += `&phone=${basket.phone}`;
       if (basket.city) url += `&city=${basket.city}`;
@@ -133,7 +132,7 @@ export function createNewBasket(username = "", password = "", basket) {
 export function updateBasketMethod(username = "", password = "", basket) {
   return function (dispatch) {
     if (basket && username.length > 0) {
-      let url = `https://albarqexpress.com/store/api/_updateBasket.php/?username=${username}&password=${password}&basket=${basket.id}`;
+      let url = `${API}/_updateBasket.php/?username=${username}&password=${password}&basket=${basket.id}`;
       if (basket.name) url += `&name=${basket.name}`;
       if (basket.phone) url += `&phone=${basket.phone}`;
       if (basket.city) url += `&city=${basket.city}`;
@@ -165,7 +164,7 @@ export function updateBasketMethod(username = "", password = "", basket) {
 export function addItemToBasket(username, password, product, basket, option) {
   return function (dispatch) {
     if (product && basket) {
-      const url = `https://albarqexpress.com/store/api/_addToBasket.php?username=${username}&password=${password}&product_id=${product}&option[]=${option}&basket=${basket}`;
+      const url = `${API}/_addToBasket.php?username=${username}&password=${password}&product_id=${product}&option[]=${option}&basket=${basket}`;
       console.log(url);
       axios
         .get(url)
@@ -186,7 +185,7 @@ export function addItemToBasket(username, password, product, basket, option) {
 export function removeItemFromBasket(username, password, product, basket) {
   // option = option ? option : product.options.id;
   return function (dispatch) {
-    const url = `https://albarqexpress.com/store/api/_deleteItemFromBasket.php?username=${username}&password=${password}&id=${product}&basket=${basket}`;
+    const url = `${API}/_deleteItemFromBasket.php?username=${username}&password=${password}&id=${product}&basket=${basket}`;
     console.log(url);
     axios
       .get(url)
@@ -205,7 +204,7 @@ export function removeItemFromBasket(username, password, product, basket) {
 
 export function clearBasketFromItems() {
   return function (dispatch) {
-    let url = `http://localhost:8050/api/myBasket/getBasket?username=07822816693&password=12345678`;
+    let url = `${API}/myBasket/_clearBasket.php?username=07822816693&password=12345678`;
     // let url = `https://albarqexpress.com/store/api/_getBaskets.php?username=07822816693&password=12345678`;
     axios
       .get(url)
@@ -223,7 +222,7 @@ export function clearBasketFromItems() {
 }
 export function AddTheFlagToListMethod(username, password, selectedFlag) {
   return function (dispatch) {
-    const url = `ttps://albarqexpress.com/store/api/favourite/createList/?username=${username}&password=${password}&listname=${selectedFlag.listname}&bg_color=${selectedFlag.bg_color}&font_color=${selectedFlag.font_color}`;
+    const url = `${API}/favourite/createList/?username=${username}&password=${password}&listname=${selectedFlag.listname}&bg_color=${selectedFlag.bg_color}&font_color=${selectedFlag.font_color}`;
 
     if (username.length > 0)
       axios
@@ -249,7 +248,7 @@ export function sendBasketToDB(
   discount
 ) {
   return function (dispatch) {
-    let url = `https://albarqexpress.com/store/api/_sendBasket.php?username=${username}&password=${password}&id=${basketId}&discount=${discount}`;
+    let url = `${API}/_sendBasket.php?username=${username}&password=${password}&id=${basketId}&discount=${discount}`;
     console.log(url);
     if (username.length > 0)
       axios
@@ -269,7 +268,7 @@ export function sendBasketToDB(
 //-------------------------------------------------------------
 export function cencelSendBasketToDB(username = "", password = "", basketId) {
   return function (dispatch) {
-    let url = `https://albarqexpress.com/store/api/_cancelBasket.php?username=${username}&password=${password}&id=${basketId}`;
+    let url = `${API}/_cancelBasket.php?username=${username}&password=${password}&id=${basketId}`;
     console.log(url);
     if (username.length > 0)
       axios

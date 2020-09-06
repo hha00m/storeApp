@@ -1,8 +1,8 @@
 import axios from 'axios';
-
+import {API} from '../../../../config';
 export function fetchingOrdersMethods(username = "", password = "") {
     return function (dispatch) {
-      let url = `https://albarqexpress.com/store/api/_getOrders.php?username=${username}&password=${password}`;
+      let url = `${API}/_getOrders.php?username=${username}&password=${password}`;
       if (username.length > 0)
         axios 
           .get(url)

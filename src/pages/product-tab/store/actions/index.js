@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Toast } from "antd-mobile";
-
+import {API} from '../../../../config'
 export function fetchingProductsMethod(
   username,
   password,
@@ -13,7 +13,7 @@ export function fetchingProductsMethod(
   update = false
 ) {
   return function (dispatch) {
-    let url = `https://albarqexpress.com/store/api/_products.php?username=${username}&password=${password}&limit=10&page=${pageIndex}`;
+    let url = `${API}/_products.php?username=${username}&password=${password}&limit=10&page=${pageIndex}`;
     //  let url = `http://localhost:8050/api/products?username=07822816693&password=12345678&limit=10&page=${pageIndex}`;
     // if (search) url += `&search=${search}`;
     // if (flag) url += `&flagList=${flag}`;
@@ -60,7 +60,7 @@ export function productDetails(user, productId) {
   return function (dispatch) {
     axios
       .get
-      // `https://albarqexpress.com/store/api/_product.php?username=${user.username}&password=${user.password}&product=${productId}`
+      `${API}/_product.php?username=${user.username}&password=${user.password}&product=${productId}`
       ()
       .then((response) => {
         dispatch({

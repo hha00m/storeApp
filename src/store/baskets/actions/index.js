@@ -1,4 +1,5 @@
 import axios from "axios";
+import {API} from '../../../config';
 export const activeCityMethod = (city_, cities_) => {
   return {
     type: "SELECTED_CITY",
@@ -25,7 +26,7 @@ export function fetchingCitiesMethod(username, password) {
     switch (citiesAndTowns) {
       case null: {
         axios
-          .get(`https://albarqexpress.com/store/api/_getCitiesAndTowns.php?username=${username}&password=${password}`)
+          .get(`${API}/_getCitiesAndTowns.php?username=${username}&password=${password}`)
           .then((response) => {
             citiesAndTowns = response.data.data;
             localStorage.setItem("CitiesAndTownsListForLocalUseOnly", JSON.stringify(citiesAndTowns));
@@ -50,7 +51,7 @@ export function fetchingBasketsMethod(username, password) {
     //   "myBasketInThis_SessionStoreage"
     // );
     
-    axios.get(`https://albarqexpress.com/store/api/_getBaskets.php?username=${username}&password=${password}`)
+    axios.get(`${API}/_getBaskets.php?username=${username}&password=${password}`)
       .then((response) => {
         dispatch({
           type: "FETCH_BASKETS_FULFILLED",
