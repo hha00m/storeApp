@@ -6,6 +6,7 @@ import BasketsModel from './components/BasketsModel'
 import NewBasket from './components/NewBasket';
 import UpdateBasket from './components/UpdateBasket'
 import BasketCard from './components/BasketCard'
+import MyAccount from './components/MyAccountModel'
 
 
 class Models extends React.Component {
@@ -18,6 +19,7 @@ class Models extends React.Component {
                 <NewBasket/>
                 <UpdateBasket/>
                 <BasketCard/>
+                <MyAccount/>
 
             </View >
         )
