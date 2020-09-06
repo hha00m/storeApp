@@ -17,7 +17,6 @@ class CitiesModel extends React.Component {
         let i = v[0] - 1;
         let val = this.props.cities[i];
         this.props.activeCityMethod(val.label, this.props.cities);
-        // console.log(this.props.activeCity);
     }
     onChangeTown = (v) => {
         let val = this.props.activeCity.towns.filter((town)=>town.value===v[0]);
@@ -32,15 +31,16 @@ class CitiesModel extends React.Component {
 
                     <Picker
                         data={this.props.cities} cols={1}
-                        extra={this.props.activeCity.label}
+                        extra={(this.props.activeCity.label?this.props.activeCity.label:(this.props.selectedBasket.city_name?this.props.selectedBasket.city_name:'أختر محافظة'))}
                         className="forss"
                         onChange={v => this.onChangeCity(v)}
                     >
-                        <List.Item extra={this.props.activeCity.label} arrow="empty" >المحافظة</List.Item>
+                        <List.Item extra={this.props.activeCity.label} 
+                        arrow="empty" >المحافظة</List.Item>
                     </Picker>
                     <Picker
                         data={this.props.activeCity.towns}
-                        extra={this.props.activeTown.label}
+                        extra={(this.props.activeTown.label?this.props.activeTown.label:(this.props.selectedBasket.town_name?this.props.selectedBasket.town_name:'أختر محافظة'))}
                         onChange={v => this.onChangeTown(v)}
                         cols={1} className="forss">
                         <List.Item extra={this.props.activeTown} arrow='empty' >المدينة</List.Item>
@@ -59,6 +59,7 @@ function mapStateToProps(state) {
         cities: state.cities.cities,
         activeCity: state.activeCity,
         activeTown: state.activeTown,
+        selectedBasket:state.selectedBasket,
         user:state.user,
     }
 }
