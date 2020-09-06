@@ -40,7 +40,7 @@ class NewBasket extends React.Component {
           closable={true}
           visible={this.props.ActiveModel.model.name === 'AddNewCustomer' && this.props.ActiveModel.action}
           onClose={() => {
-            this.props.fetchingBasketsMethod(this.props.user.username, this.props.user.password, true)
+            this.props.fetchingBasketsMethod(this.props.user.user.data.username, this.props.user.user.password, true)
             this.props.closeModelMethod(this.props.modelList[2]);
           }}
           animationType="slide-up"
@@ -57,6 +57,7 @@ class NewBasket extends React.Component {
               الاسم :</InputItem>
             <InputItem
               type="phone"
+              clear
               placeholder="07x xxx xxxx"
               {...getFieldProps('phone')}
               style={{ direction: "ltr", paddingLeft: "8px", paddingRight: "8px" }}

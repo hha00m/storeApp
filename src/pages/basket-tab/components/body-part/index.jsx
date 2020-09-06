@@ -80,7 +80,7 @@ const BasketsTab = (props) => {
                                 disabled={i.status === '2'}
                             >
                                     <Flex>
-                                        <span style={{ marginLeft: "35px", marginRight: "35px" }}> {i.customer_name} - {i.customer_phone} - {i.city} - {i.total_price} </span>
+                                    <span > {i.customer_name} - {i.customer_phone} - {i.city_name} - {i.town_name} </span>
                                     </Flex>
                                 </List.Item>
                             </SwipeAction>

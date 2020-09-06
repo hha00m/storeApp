@@ -18,7 +18,7 @@ const UpdateBasket = (props) => {
         closable={true}
         visible={props.ActiveModel.model.name === 'EditBasketModel' && props.ActiveModel.action}
         onClose={() => {
-          props.fetchingBasketsMethod(props.user.username, props.user.password, true)
+          props.fetchingBasketsMethod(props.user.user.data.username, props.user.user.password, true)
           props.closeModelMethod(props.modelList[3]);
         }}
         animationType="slide-up"
@@ -34,7 +34,7 @@ function mapStateToProps(state) {
 
     modelList: state.modelList,
     ActiveModel: state.ActiveModel,
-
+    user: state.user,
 
   }
 
