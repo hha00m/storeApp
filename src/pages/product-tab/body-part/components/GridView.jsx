@@ -13,21 +13,24 @@ let _data = [];
 
 const GridView = (props) => {
   const [loading, setLoading] = useState(true);
-  const _onDataArrived = (newData) => {
 
+
+
+  const _onDataArrived = (newData) => {
     if (_data.length !== newData.length) {
       _data = newData;
     }
   }
 
 
-
-  const onEndReached = event => {
-
+ const onEndReached = event => {
     setLoading(true);
     ++pageIndex;
     props.fetchingProducts(props.user.user.data.username, props.user.user.password, pageIndex, _data);
+    console.log("reach end", event);
   };
+
+
 
 
 
@@ -77,14 +80,13 @@ function mapStateToProps(state) {
   return {
 
     products: state.products,
-    user:state.user,
+    user: state.user,
 
   }
 }
 function matchDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      fetchingProductsMethod: dispatch(fetchingProductsMethod()),
       fetchingProducts: fetchingProductsMethod,
     }, dispatch);
 }
