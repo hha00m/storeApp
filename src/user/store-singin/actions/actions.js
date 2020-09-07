@@ -19,8 +19,7 @@ export function singinWithServer(username = "", password = "") {
     let user = localStorage.getItem("user");
     let url = `${API}/_login.php?username=${username}&password=${password}`;
     if (username || user) {
-      switch (user) {
-        case null: {
+      if(!user) {
           axios
             .get(url)
             .then((response) => {
@@ -39,16 +38,16 @@ export function singinWithServer(username = "", password = "") {
             .catch((err) => {
               dispatch({ type: "SINGIN_WITH_DB_REJECTED", payload: err });
             });
-          break;
-        }
-        default: {
+      }else{
           user = JSON.parse(user);
           dispatch({
             type: "SINGIN_WITH_DB_FULFILLED",
             payload: user,
           });
-        }
       }
-    }
+    }else
+    dispatch({ type: "SINGIN_WITH_DB_REJECTED", payload: "err" });
+
+    
   };
 }

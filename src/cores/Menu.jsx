@@ -25,10 +25,6 @@ class Menu extends React.Component {
         this.props.singinWithServer(this.state.username, this.state.password)
     }
 
-    // componentDidUpdate() {
-    //     if (this.props.user.user.data && this.props.logout.isLogout)
-    //         this.props.logoutMethod(false);
-    // }
     handleFieldChange = (e, fieldName) => {
         let data = this.state;
         data[fieldName] = e;
@@ -66,14 +62,13 @@ class Menu extends React.Component {
                         <Button
                             type="primary"
                             style={{ width: "80%", marginRight: "4px", margin: 'auto', boxShadow: '5px 4px 20px 2px grey' }}
-                            onClick={() => {
-                                this.props.singinWithServer(this.state.username, this.state.password);
-                            }}
+                            onClick={()=>this.props.singinWithServer(this.state.username, this.state.password)}
+
                         >
                             تسجيل دخول
       </Button>
-      <WhiteSpace size='xl' />
-      <WhiteSpace size='xl' />
+                        <WhiteSpace size='xl' />
+                        <WhiteSpace size='xl' />
 
                     </List>
                 </WingBlank>
@@ -202,6 +197,7 @@ function mapStateToProps(state) {
 function matchDispatchToProps(dispatch) {
     return bindActionCreators(
         {
+            singinWithServer: dispatch(singinWithServer()),
             singinWithServer: singinWithServer,
             logoutMethod: logoutMethod,
         }, dispatch);

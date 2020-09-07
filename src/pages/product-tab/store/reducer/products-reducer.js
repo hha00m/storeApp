@@ -6,7 +6,7 @@ export default function (
     fetching: true,
     height: (document.documentElement.clientHeight * 3) / 4,
   },
-  action = "FETCH_PRODUCTS_PADDING"
+  action
 ) {
   switch (action.type) {
     case "FETCH_PRODUCTS_PADDING": {
