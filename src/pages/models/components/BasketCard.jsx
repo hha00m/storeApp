@@ -69,7 +69,7 @@ const BasketCard = (props) => {
                     discount: discount2
                 });
         }
-
+       // eslint-disable-next-line
     }, [props.basketById.basket.items])
     return (
         <Modal

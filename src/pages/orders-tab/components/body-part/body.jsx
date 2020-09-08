@@ -8,7 +8,8 @@ import Item from 'antd-mobile/lib/popover/Item';
 const OrdersTab = (props) => {
     useEffect(() => {
         props.fetchingOrdersMethods(props.user.user.data.username, props.user.user.password)
-    }, [])
+   // eslint-disable-next-line
+ }, [])
 
     return (
         <WingBlank >

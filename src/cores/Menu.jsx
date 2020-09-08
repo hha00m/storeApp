@@ -62,7 +62,7 @@ class Menu extends React.Component {
                         <Button
                             type="primary"
                             style={{ width: "80%", marginRight: "4px", margin: 'auto', boxShadow: '5px 4px 20px 2px grey' }}
-                            onClick={()=>this.props.singinWithServer(this.state.username, this.state.password)}
+                            onClick={() => this.props.singinWithServer(this.state.username, this.state.password)}
 
                         >
                             تسجيل دخول
@@ -198,6 +198,7 @@ function matchDispatchToProps(dispatch) {
     return bindActionCreators(
         {
             singinWithServer: dispatch(singinWithServer()),
+            // eslint-disable-next-line
             singinWithServer: singinWithServer,
             logoutMethod: logoutMethod,
         }, dispatch);

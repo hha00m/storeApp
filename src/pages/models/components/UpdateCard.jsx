@@ -1,6 +1,5 @@
 import React from 'react';
-import utf8 from 'utf8';
-import { List, Button, InputItem, TextareaItem, View, Modal, Toast } from 'antd-mobile';
+import { List, Button, InputItem, TextareaItem,  Toast } from 'antd-mobile';
 import { ContactsOutlined } from '@ant-design/icons';
 import './_style.css';
 import { bindActionCreators } from 'redux';

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Flex, ActivityIndicator, View, Button, InputItem, Modal, List, Toast } from 'antd-mobile';
+import React from 'react';
+import { Flex, Modal, List } from 'antd-mobile';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { closeModelMethod, } from '../../models/store/actions/index';
@@ -43,7 +43,7 @@ const MyAccountModel = (props) => {
                                     <Flex
                                         style={{ direction: 'rtl', height: '50px' }}>
                                         <Flex.Item style={{ flex: '5', fontSize: '   16px' }}>الدور</Flex.Item>
-                                        <Flex.Item style={{ flex: '5', fontSize: '   16px' }}>{props.user.user.data.role==1?'مدير':'مندوب بيعات'}</Flex.Item>
+                                        <Flex.Item style={{ flex: '5', fontSize: '   16px' }}>{props.user.user.data.role===1?'مدير':'مندوب بيعات'}</Flex.Item>
                                     </Flex>
                                 </Item> 
                                 <Item>

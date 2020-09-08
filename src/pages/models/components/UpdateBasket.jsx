@@ -1,13 +1,10 @@
 import React from 'react';
-import utf8 from 'utf8';
-import { List, Button, InputItem, TextareaItem, View, Modal } from 'antd-mobile';
-import { ContactsOutlined } from '@ant-design/icons';
+import { View, Modal } from 'antd-mobile';
 import './_style.css';
 import { bindActionCreators } from 'redux';
 import { createForm } from 'rc-form';
 import { connect } from 'react-redux';
-import { updateBasketMethod, closeModelMethod, fetchingBasketsMethod } from './../store/actions';
-import CityModel from './CitiesModels';
+import {  closeModelMethod, fetchingBasketsMethod } from './../store/actions';
 import UpdateCard from './UpdateCard';
 
 const UpdateBasket = (props) => {

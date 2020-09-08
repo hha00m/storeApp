@@ -96,7 +96,10 @@ class BasketsModel extends React.Component {
 
                                             }, {
                                                 text: 'عرض',
-                                                onPress: () => this.props.activeModelMethod(this.props.modelList[5])
+                                                onPress: () =>{ 
+                                                    this.selectBasket(i);
+                                                    this.props.activeModelMethod(this.props.modelList[5]);
+                                                }
                                                 ,
                                                 style: { backgroundColor: '#525266', color: 'white' },
                                             },

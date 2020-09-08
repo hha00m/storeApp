@@ -1,14 +1,20 @@
 import React from "react";
-import { Picker, View, List } from 'antd-mobile';
+import { Picker, View, List, SearchBar } from 'antd-mobile';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { activeTownMethod, activeCityMethod,fetchingCitiesMethod } from '../../../store/baskets/actions/index';
+import { activeTownMethod, activeCityMethod, fetchingCitiesMethod } from '../../../store/baskets/actions/index';
 import './_style.css';
 
- 
- 
+
+
 class CitiesModel extends React.Component {
-    componentDidMount(){
+    constructor() {
+        super();
+        this.state = {
+            search: ''
+        };
+    }
+    componentDidMount() {
         this.props.fetchingCitiesMethod(this.props.user.user.user.data.username, this.props.user.user.user.password)
 
     }
@@ -18,12 +24,23 @@ class CitiesModel extends React.Component {
         let val = this.props.cities[i];
         this.props.activeCityMethod(val.label, this.props.cities);
     }
+    clear = () => {
+        this.setState({ value: '' });
+    };
     onChangeTown = (v) => {
-        let val = this.props.activeCity.towns.filter((town)=>town.value===v[0]);
-         this.props.activeTownMethod(val[0]);
+        let val = this.props.activeCity.towns.filter((town) => town.value === v[0]);
+        this.props.activeTownMethod(val[0]);
     }
-
+    onFilter = (e) => {
+        this.setState({ search: e.substr(0, 20) });
+    }
     render() {
+        let townsList = [];
+        if (this.props.activeCity.towns) {
+            townsList = (this.props.activeCity.towns).filter((oneTown) => {
+                return oneTown.label.includes(this.state.search);
+            })
+        }
         return (
             <View>
                 <List style={{ paddingRight: '8px', textAlign: 'left', direction: 'rtl', backgroundColor: 'white' }} className="picker-list">
@@ -31,16 +48,25 @@ class CitiesModel extends React.Component {
 
                     <Picker
                         data={this.props.cities} cols={1}
-                        extra={(this.props.activeCity.label?this.props.activeCity.label:(this.props.selectedBasket.city_name?this.props.selectedBasket.city_name:'أختر محافظة'))}
+                        extra={(this.props.activeCity.label ? this.props.activeCity.label : (this.props.selectedBasket.city_name ? this.props.selectedBasket.city_name : 'أختر محافظة'))}
                         className="forss"
                         onChange={v => this.onChangeCity(v)}
                     >
-                        <List.Item extra={this.props.activeCity.label} 
-                        arrow="empty" >المحافظة</List.Item>
+                        <List.Item extra={this.props.activeCity.label}
+                            arrow="empty" >المحافظة</List.Item>
                     </Picker>
                     <Picker
-                        data={this.props.activeCity.towns}
-                        extra={(this.props.activeTown.label?this.props.activeTown.label:(this.props.selectedBasket.town_name?this.props.selectedBasket.town_name:'أختر محافظة'))}
+                        title={
+                            <SearchBar
+                                style={{ width: '150px'  }}
+                                onChange={this.onFilter.bind(this)}
+                                onClear={value => console.log(value, 'onClear')}
+                                value={this.state.search}
+                                cancelText="مسح"
+
+                            />}
+                        data={townsList}
+                        extra={(this.props.activeTown.label ? this.props.activeTown.label : (this.props.selectedBasket.town_name ? this.props.selectedBasket.town_name : 'أختر منطقة'))}
                         onChange={v => this.onChangeTown(v)}
                         cols={1} className="forss">
                         <List.Item extra={this.props.activeTown} arrow='empty' >المدينة</List.Item>
@@ -59,8 +85,8 @@ function mapStateToProps(state) {
         cities: state.cities.cities,
         activeCity: state.activeCity,
         activeTown: state.activeTown,
-        selectedBasket:state.selectedBasket,
-        user:state.user,
+        selectedBasket: state.selectedBasket,
+        user: state.user,
     }
 }
 function matchDispatchToProps(dispatch) {
@@ -68,7 +94,7 @@ function matchDispatchToProps(dispatch) {
         {
             activeCityMethod: activeCityMethod,
             activeTownMethod: activeTownMethod,
-            fetchingCitiesMethod:fetchingCitiesMethod,
+            fetchingCitiesMethod: fetchingCitiesMethod,
         }, dispatch);
 }
 
