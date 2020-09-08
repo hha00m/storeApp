@@ -119,12 +119,12 @@ class BasketsModel extends React.Component {
                         <List.Item>
 
                             <Button type="ghost" onClick={() => this.props.activeModelMethod(this.props.modelList[2])} style={{ fontSize: '16px' }}> <PlusCircleOutlined style={{ fontSize: '20px', marginLeft: "8px", marginRight: "8px" }} /> اضافة سلة جديدة</Button><WhiteSpace />
-
+ 
                             <Button
                                 type="primary" style={{ fontSize: '16px' }}
-                                onClick={() => this.props.addItemToBasket(
+                                onClick={()=> this.props.addItemToBasket(
                                     this.props.user.user.data.username, this.props.user.user.password,
-                                    this.props.activeProduct.product.id, this.props.selectedBasket.id, this.props.activeProduct.product.attribute[0].id)
+                                    this.props.activeProduct.product.id, this.props.selectedBasket.id, this.props.activeProduct.options.id)
                                 }
                             ><ShoppingOutlined style={{ fontSize: '20px', marginLeft: "8px", marginRight: "8px" }} /> شراء  </Button>
                         </List.Item>

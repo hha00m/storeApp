@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Toast } from "antd-mobile";
-import {API} from '../../../../config';
+import { API } from "../../../../config";
 export const activeModelMethod = (val) => {
   return {
     type: "ACTIVE_MODEL",
@@ -19,46 +19,44 @@ export function fetchingBasketsMethod(
   username = "",
   password = "",
   update = false
-) { 
+) {
   return function (dispatch) {
     let url = `${API}/_getBaskets.php?username=${username}&password=${password}`;
     if (username.length > 0) {
       if (navigator.onLine) {
-        if(update) localStorage.removeItem('basketsList');
+        if (update) localStorage.removeItem("basketsList");
       }
       // else {
       //   Toast.offline("لايوجد انترنيت حاول مجددا", 2, null, false);
       // }
 
-      let data2 = null;//localStorage.getItem("basketsList");
+      let data2 = null; //localStorage.getItem("basketsList");
 
       switch (data2) {
-        case null:
-          {
-            axios
-              .get(url)
-              .then((response) => {
-                let obj=response.data.data;
-                localStorage.setItem("basketsList", JSON.stringify(obj));
-                dispatch({
-                  type: "FETCH_BASKETS_FULFILLED",
-                  payload: obj,
-                });
-              })
-              .catch((err) => {
-                dispatch({ type: "FETCH_BASKETS_REJECTED", payload: err });
+        case null: {
+          axios
+            .get(url)
+            .then((response) => {
+              let obj = response.data.data;
+              localStorage.setItem("basketsList", JSON.stringify(obj));
+              dispatch({
+                type: "FETCH_BASKETS_FULFILLED",
+                payload: obj,
               });
-          break;}
-          default: {
-            data2 = JSON.parse(data2);
-            dispatch({
-              type: "FETCH_BASKETS_FULFILLED",
-              payload: data2,
+            })
+            .catch((err) => {
+              dispatch({ type: "FETCH_BASKETS_REJECTED", payload: err });
             });
-          }
-          
+          break;
+        }
+        default: {
+          data2 = JSON.parse(data2);
+          dispatch({
+            type: "FETCH_BASKETS_FULFILLED",
+            payload: data2,
+          });
+        }
       }
-      
     }
   };
 }
@@ -89,8 +87,11 @@ export function deleteBasketsMethod(username = "", password = "", basketId) {
       axios
         .get(url)
         .then((response) => {
-          Toast.success(" تم ", 2, null, false);
-
+          if (response.data.success === 1) {
+            Toast.success(" تم ", 2, null, false);
+          } else {
+            Toast.fail(" حاول مرة اخرا ", 2, null, false);
+          }
           dispatch({
             type: "REMOVE_BASKET_FROM_DB_FULFILLED",
             payload: response.data.data,
@@ -115,8 +116,11 @@ export function createNewBasket(username = "", password = "", basket) {
       axios
         .get(url)
         .then((response) => {
-          Toast.success(" تم ", 2, null, false);
-          dispatch({
+          if (response.data.success === 1) {
+            Toast.success(" تم ", 2, null, false);
+          } else {
+            Toast.fail(" حاول مرة اخرا ", 2, null, false);
+          }          dispatch({
             type: "CREATE_NEW_BASKET_FULFILLED",
             payload: response.data.data,
           });
@@ -127,7 +131,6 @@ export function createNewBasket(username = "", password = "", basket) {
     }
   };
 }
-
 
 export function updateBasketMethod(username = "", password = "", basket) {
   return function (dispatch) {
@@ -143,12 +146,12 @@ export function updateBasketMethod(username = "", password = "", basket) {
       axios
         .get(url)
         .then((response) => {
-          if(response.data.success===1){
-          Toast.success(" تم ", 2, null, false);
-        }else{          
-          Toast.fail(" يرجى التاكد من المعلومات ", 2, null, false);
-      }
-        dispatch({
+          if (response.data.success === 1) {
+            Toast.success(" تم ", 2, null, false);
+          } else {
+            Toast.fail(" يرجى التاكد من المعلومات ", 2, null, false);
+          }
+          dispatch({
             type: "UPDATE_BASKET_FULFILLED",
             payload: response.data.data,
           });
@@ -169,7 +172,11 @@ export function addItemToBasket(username, password, product, basket, option) {
       axios
         .get(url)
         .then((response) => {
-          Toast.success(" تم ", 2, null, false);
+          if (response.data.success === 1) {
+            Toast.success(" تم ", 2, null, false);
+          } else {
+            Toast.fail(" حاول مرة اخرا ", 2, null, false);
+          }
           dispatch({
             type: "ADD_ITEM_TO_BASKET_FULFILLED",
             payload: response.data.data,
@@ -190,8 +197,11 @@ export function removeItemFromBasket(username, password, product, basket) {
     axios
       .get(url)
       .then((response) => {
-        Toast.success(" تم ", 2, null, false);
-        dispatch({
+        if (response.data.success === 1) {
+          Toast.success(" تم ", 2, null, false);
+        } else {
+          Toast.fail(" حاول مرة اخرا ", 2, null, false);
+        }        dispatch({
           type: "REMOVE_ITEM_FROM_BASKET_FULFILLED",
           payload: response.data,
         });
@@ -209,8 +219,11 @@ export function clearBasketFromItems() {
     axios
       .get(url)
       .then((response) => {
-        Toast.success(" تم ", 2, null, false);
-        dispatch({
+        if (response.data.success === 1) {
+          Toast.success(" تم ", 2, null, false);
+        } else {
+          Toast.fail(" حاول مرة اخرا ", 2, null, false);
+        }        dispatch({
           type: "CLEAR_BASKET_FROM_ITEMS_FULFILLED",
           payload: response.data,
         });
@@ -228,8 +241,11 @@ export function AddTheFlagToListMethod(username, password, selectedFlag) {
       axios
         .get(url)
         .then((response) => {
-          Toast.success(" تم ", 2, null, false);
-          dispatch({
+          if (response.data.success === 1) {
+            Toast.success(" تم ", 2, null, false);
+          } else {
+            Toast.fail(" حاول مرة اخرا ", 2, null, false);
+          }          dispatch({
             type: "ADD_NEW_FLAG_TO_LIST_FULFILLED",
             payload: response.data,
           });
@@ -254,8 +270,11 @@ export function sendBasketToDB(
       axios
         .get(url)
         .then((response) => {
-          Toast.success(" تم ", 2, null, false);
-          dispatch({
+          if (response.data.success === 1) {
+            Toast.success(" تم ", 2, null, false);
+          } else {
+            Toast.fail(" حاول مرة اخرا ", 2, null, false);
+          }          dispatch({
             type: "SEND_BASKET_TO_DB_FULFILLED",
             payload: response.data.data,
           });

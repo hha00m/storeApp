@@ -26,11 +26,11 @@ const ProductCard = (props) => {
 
 
     }
-    const onChangeTag = (obj, option) => {
-        console.log('tag changed', obj, option);
-        props.activeProductMethod(obj, option)
+    // const onChangeTag = (obj, option) => {
+    //     console.log('tag changed', obj, option);
+    //     props.activeProductMethod(obj, option)
 
-    };
+    // };
 
     return (
 
@@ -83,7 +83,7 @@ const ProductCard = (props) => {
                                                 (v.config).map((option, index) =>
                                                     <Tag key={index}
                                                         selected={(props.activeProduct.options ? props.activeProduct.options.id === option.id : false) && props.activeProduct.product.id === obj.id}
-                                                        onChange={() => onChangeTag(obj, option)}
+                                                        onChange={() => props.activeProductMethod(obj, option)}
                                                     >{option.value}</Tag>
                                                 )}
                                         </Flex>)

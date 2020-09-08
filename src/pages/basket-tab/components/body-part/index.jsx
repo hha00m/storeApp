@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { activeModelMethod, closeModelMethod } from '../../../models/store/actions/index';
 import {
     cencelSendBasketToDB, fetchingBasketsMethod, deleteBasketsMethod,
-    sendBasketToDB, selectedBasketMethod, addItemToBasket, all_selectedBasketsMethod, fetchingBasketByIDMethod
+    sendBasketToDB, selectedBasketMethod , fetchingBasketByIDMethod
 } from '../../../models/store/actions/index';
 // import './_style.css';
 const BasketsTab = (props) => {
@@ -110,8 +110,7 @@ function mapStateToProps(state) {
         user: state.user.user,
         selectedBasket: state.selectedBasket,
         activeProduct: state.activeProduct,
-        all_selectedBaskets: state.all_selectedBaskets,
-
+ 
     }
 }
 function matchDispatchToProps(dispatch) {
@@ -124,8 +123,6 @@ function matchDispatchToProps(dispatch) {
             sendBasketToDB: sendBasketToDB,
             cencelSendBasketToDB: cencelSendBasketToDB,
             selectedBasketMethod: selectedBasketMethod,
-            addItemToBasket: addItemToBasket,
-            all_selectedBasketsMethod: all_selectedBasketsMethod,
             fetchingBasketByIDMethod: fetchingBasketByIDMethod,
         }, dispatch);
 }
