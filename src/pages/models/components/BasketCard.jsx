@@ -32,7 +32,7 @@ const BasketCard = (props) => {
     }
     const onUpdate = () => {
         setIsLoading(true);
-        props.fetchingBasketByIDMethod(props.user.user.data.username, props.user.user.password, props.basketById.basket.id)
+        props.fetchingBasketByIDMethod(props.user.user.data.username, props.user.user.password, props.basketById.basket.id )
     }
     const onAddItem = (id, bi_id) => {
         props.addItemToBasket(

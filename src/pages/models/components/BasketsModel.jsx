@@ -20,8 +20,8 @@ class BasketsModel extends React.Component {
             this.props.fetchingBasketsMethod(this.props.user.user.data.username, this.props.user.user.password);
     }
     selectBasket = (val) => {
-        this.props.fetchingBasketByIDMethod(this.props.user.user.data.username, this.props.user.user.password, val.id)
         this.props.selectedBasketMethod(val)
+        this.props.fetchingBasketByIDMethod(this.props.user.user.data.username, this.props.user.user.password, val.id)
     }
     onUpdate = () => {
         this.props.fetchingBasketsMethod(this.props.user.user.data.username, this.props.user.user.password, true)

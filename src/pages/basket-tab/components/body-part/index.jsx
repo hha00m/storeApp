@@ -12,8 +12,8 @@ import {
 const BasketsTab = (props) => {
 
     const selectBasket = (val) => {
-        props.fetchingBasketByIDMethod(props.user.user.data.username, props.user.user.password, val.id)
         props.selectedBasketMethod(val)
+        props.fetchingBasketByIDMethod(props.user.user.data.username, props.user.user.password, val.id)
     }
    const onUpdate = () => {
         props.fetchingBasketsMethod(props.user.user.data.username, props.user.user.password,true)
