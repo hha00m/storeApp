@@ -40,16 +40,16 @@ const UpdateCard = (props) => {
             <InputItem
                 clear
                 type="text"
-                {...getFieldProps('name')}
-                defaultValue={props.selectedBasket.customer_name ? props.selectedBasket.customer_name : ''}
+                {...getFieldProps('name', { initialValue:props.selectedBasket.customer_name ? props.selectedBasket.customer_name : ''  })}
+                // defaultValue={props.selectedBasket.customer_name ? props.selectedBasket.customer_name : ''}
             >
                 الاسم :</InputItem>
             <InputItem
                 type="phone"
                 clear
                 placeholder="07x xxx xxxx"
-                defaultValue={props.selectedBasket.customer_phone}
-                {...getFieldProps('phone')}
+                // defaultValue={props.selectedBasket.customer_phone}
+                {...getFieldProps('phone', { initialValue:props.selectedBasket.customer_phone})}
                 style={{ direction: "ltr", paddingLeft: "8px", paddingRight: "8px" }}
             >الموبايل:
           </InputItem>
