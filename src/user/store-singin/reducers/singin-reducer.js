@@ -22,6 +22,14 @@ export default function (
           user: action.payload,
         };
       }
+      case "SIGNOUT_FULFILLED": {
+        return {
+          ...state,
+          fetched: true,
+          fetching: false,
+          user: action.payload,
+        };
+      }
       default:
         return state;
     }

@@ -12,11 +12,11 @@ import {
 const BasketsTab = (props) => {
 
     const selectBasket = (val) => {
-        props.fetchingBasketByIDMethod(props.user.data.username, props.user.password, val.id)
+        props.fetchingBasketByIDMethod(props.user.user.data.username, props.user.user.password, val.id)
         props.selectedBasketMethod(val)
     }
    const onUpdate = () => {
-        props.fetchingBasketsMethod(props.user.data.username, props.user.password,true)
+        props.fetchingBasketsMethod(props.user.user.data.username, props.user.user.password,true)
     }
     return (
         <WingBlank >
@@ -41,7 +41,7 @@ const BasketsTab = (props) => {
                                     {
                                         text: 'الغاء التثبيت',
                                         onPress: () => {
-                                            props.cencelSendBasketToDB(props.user.data.username, props.user.password, i.id);
+                                            props.cencelSendBasketToDB(props.user.user.data.username, props.user.user.password, i.id);
                                             onUpdate ();
                                          },
                                         style: { backgroundColor: '#525266', color: 'white' },
@@ -49,7 +49,7 @@ const BasketsTab = (props) => {
                                     {
                                         text: 'حذف',
                                         onPress: () => {
-                                            props.deleteBasketsMethod(props.user.data.username, props.user.password, i.id);
+                                            props.deleteBasketsMethod(props.user.user.data.username, props.user.user.password, i.id);
                                             onUpdate ();
                                         },
                                         style: { backgroundColor: '#ff6666', color: 'white' },

@@ -15,16 +15,16 @@ const RadioItem = Radio.RadioItem;
 
 class BasketsModel extends React.Component {
     componentDidMount() {
-        console.log(this.props.user.data);
-        if (this.props.user.data.username)
-            this.props.fetchingBasketsMethod(this.props.user.data.username, this.props.user.password);
+        console.log(this.props.user.user.data);
+        if (this.props.user.user.data.username)
+            this.props.fetchingBasketsMethod(this.props.user.user.data.username, this.props.user.user.password);
     }
     selectBasket = (val) => {
-        this.props.fetchingBasketByIDMethod(this.props.user.data.username, this.props.user.password, val.id)
+        this.props.fetchingBasketByIDMethod(this.props.user.user.data.username, this.props.user.user.password, val.id)
         this.props.selectedBasketMethod(val)
     }
     onUpdate = () => {
-        this.props.fetchingBasketsMethod(this.props.user.data.username, this.props.user.password, true)
+        this.props.fetchingBasketsMethod(this.props.user.user.data.username, this.props.user.user.password, true)
     }
     render() {
         return (
@@ -64,7 +64,7 @@ class BasketsModel extends React.Component {
                                             {
                                                 text: 'الغاء التثبيت',
                                                 onPress: () => {
-                                                    this.props.cencelSendBasketToDB(this.props.user.data.username, this.props.user.password, i.id);
+                                                    this.props.cencelSendBasketToDB(this.props.user.user.data.username, this.props.user.user.password, i.id);
                                                     this.onUpdate();
                                                 },
                                                 style: { backgroundColor: '#525266', color: 'white' },
@@ -74,7 +74,7 @@ class BasketsModel extends React.Component {
                                                 onPress: () => {
                                                     if (i.status === '2') Toast.fail('السلة مثبتة ولاتستطيع حذفها');
                                                     else {
-                                                        this.props.deleteBasketsMethod(this.props.user.data.username, this.props.user.password, i.id);
+                                                        this.props.deleteBasketsMethod(this.props.user.user.data.username, this.props.user.user.password, i.id);
                                                         this.onUpdate();
                                                     }
                                                 },
@@ -123,7 +123,7 @@ class BasketsModel extends React.Component {
                             <Button
                                 type="primary" style={{ fontSize: '16px' }}
                                 onClick={() => this.props.addItemToBasket(
-                                    this.props.user.data.username, this.props.user.password,
+                                    this.props.user.user.data.username, this.props.user.user.password,
                                     this.props.activeProduct.product.id, this.props.selectedBasket.id, this.props.activeProduct.product.attribute[0].id)
                                 }
                             ><ShoppingOutlined style={{ fontSize: '20px', marginLeft: "8px", marginRight: "8px" }} /> شراء  </Button>

@@ -9,7 +9,7 @@ import './_style.css';
  
 class CitiesModel extends React.Component {
     componentDidMount(){
-        this.props.fetchingCitiesMethod(this.props.user.user.data.username, this.props.user.user.password)
+        this.props.fetchingCitiesMethod(this.props.user.user.user.data.username, this.props.user.user.user.password)
 
     }
 

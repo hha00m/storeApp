@@ -7,7 +7,7 @@ import './components/style.css';
 import Item from 'antd-mobile/lib/popover/Item';
 const OrdersTab = (props) => {
     useEffect(() => {
-        props.fetchingOrdersMethods(props.user.data.username, props.user.password)
+        props.fetchingOrdersMethods(props.user.user.data.username, props.user.user.password)
     }, [])
 
     return (

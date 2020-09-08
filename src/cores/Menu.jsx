@@ -35,7 +35,7 @@ class Menu extends React.Component {
     render() {
 
         return (
-            this.props.logout.isLogout || !(this.props.user.user.data) ?
+            this.props.user.user.isLogout || !(this.props.user.user.user) ?
                 <WingBlank>
                     <List
                         style={{ direction: 'rtl', textAlign: 'right', marginTop: '100px', marginBottom: '50px' }}

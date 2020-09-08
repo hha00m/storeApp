@@ -12,7 +12,7 @@ let pageIndex = 1;
 class Body extends React.Component {
   constructor(props) {
     super(props);
-    this.props.fetchingProducts(this.props.user.user.data.username, this.props.user.user.password, pageIndex, this._data);
+    this.props.fetchingProducts(this.props.user.user.user.data.username, this.props.user.user.user.password, pageIndex, this._data);
 
     const ds = new ListView.DataSource({
       rowHasChanged: (row1, row2) => row1 !== row2,
@@ -58,7 +58,7 @@ class Body extends React.Component {
     }
     this.setState({ isLoading: true });
     ++pageIndex;
-    this.props.fetchingProducts(this.props.user.user.data.username, this.props.user.user.password, pageIndex, this._data);
+    this.props.fetchingProducts(this.props.user.user.user.data.username, this.props.user.user.user.password, pageIndex, this._data);
 
     console.log("reach end", event);
   };

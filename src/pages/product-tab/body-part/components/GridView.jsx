@@ -10,12 +10,8 @@ import { useState } from "react";
 let pageIndex = 1;
 let _data = [];
 
-
 const GridView = (props) => {
   const [loading, setLoading] = useState(true);
-
-
-
   const _onDataArrived = (newData) => {
     if (_data.length !== newData.length) {
       _data = newData;
@@ -26,7 +22,7 @@ const GridView = (props) => {
  const onEndReached = event => {
     setLoading(true);
     ++pageIndex;
-    props.fetchingProducts(props.user.user.data.username, props.user.user.password, pageIndex, _data);
+    props.fetchingProducts(props.user.user.user.data.username, props.user.user.user.password, pageIndex, _data);
     console.log("reach end", event);
   };
 

@@ -19,11 +19,11 @@ const BasketCard = (props) => {
     const [isLoading, setIsLoading] = useState(true);
 
     const onConfirmOrder = () => {
-        props.sendBasketToDB(props.user.data.username, props.user.password, props.basketById.basket.id, totalPrice.discount);
+        props.sendBasketToDB(props.user.user.data.username, props.user.user.password, props.basketById.basket.id, totalPrice.discount);
         onUpdate();
     }
     const onCencelationOrder = () => {
-        props.cencelSendBasketToDB(props.user.data.username, props.user.password, props.basketById.basket.id);
+        props.cencelSendBasketToDB(props.user.user.data.username, props.user.user.password, props.basketById.basket.id);
         onUpdate();
     }
     const changePrice = (v) => {
@@ -32,11 +32,11 @@ const BasketCard = (props) => {
     }
     const onUpdate = () => {
         setIsLoading(true);
-        props.fetchingBasketByIDMethod(props.user.data.username, props.user.password, props.basketById.basket.id)
+        props.fetchingBasketByIDMethod(props.user.user.data.username, props.user.user.password, props.basketById.basket.id)
     }
     const onAddItem = (id, bi_id) => {
         props.addItemToBasket(
-            props.user.data.username, props.user.password,
+            props.user.user.data.username, props.user.user.password,
             id, props.basketById.basket.id, bi_id
         );
         onUpdate();
@@ -44,7 +44,7 @@ const BasketCard = (props) => {
     }
     const onDeleteItem = (bi_id) => {
         props.removeItemFromBasket(
-            props.user.data.username, props.user.password,
+            props.user.user.data.username, props.user.user.password,
             bi_id, props.basketById.basket.id
         )
         onUpdate();
@@ -80,7 +80,7 @@ const BasketCard = (props) => {
             popup
             animationType="slide-down"
             onClose={() => {
-                props.fetchingBasketsMethod(props.user.data.username, props.user.password, true);
+                props.fetchingBasketsMethod(props.user.user.data.username, props.user.user.password, true);
                 props.closeModelMethod(props.modelList[5]);
             }}
 

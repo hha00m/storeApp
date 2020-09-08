@@ -23,7 +23,7 @@ const UpdateCard = (props) => {
 
             value['id'] = props.selectedBasket.id;
             if (value.city && value.town && value.phone) {
-                props.updateBasketMethod(props.user.user.data.username, props.user.user.password, value);
+                props.updateBasketMethod(props.user.user.user.data.username, props.user.user.user.password, value);
             }else Toast.fail('خطاء بالادخال')
 
         });

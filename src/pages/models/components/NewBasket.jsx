@@ -17,14 +17,14 @@ class NewBasket extends React.Component {
   }
 
   onUpdate = () => {
-    this.props.fetchingBasketsMethod(this.props.user.username, this.props.user.password, true)
+    this.props.fetchingBasketsMethod(this.props.user.user.user.data.username, this.props.user.user.user.password, true)
   }
   submit = () => {
     this.props.form.validateFields((error, value) => {
       value['city'] = this.props.activeCity.value;
       value['town'] = this.props.activeTown.value;
       if (value.city && value.town && value.phone) {
-        this.props.createNewBasket(this.props.user.user.data.username, this.props.user.user.password, value);
+        this.props.createNewBasket(this.props.user.user.user.data.username, this.props.user.user.user.password, value);
       }
 
     });
@@ -40,7 +40,7 @@ class NewBasket extends React.Component {
           closable={true}
           visible={this.props.ActiveModel.model.name === 'AddNewCustomer' && this.props.ActiveModel.action}
           onClose={() => {
-            this.props.fetchingBasketsMethod(this.props.user.user.data.username, this.props.user.user.password, true)
+            this.props.fetchingBasketsMethod(this.props.user.user.user.data.username, this.props.user.user.user.password, true)
             this.props.closeModelMethod(this.props.modelList[2]);
           }}
           animationType="slide-up"

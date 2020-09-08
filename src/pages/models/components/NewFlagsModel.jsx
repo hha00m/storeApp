@@ -63,7 +63,7 @@ class NewFlagsModels extends React.Component {
                         text: 'تأكيد',
                         onPress: () => {
                             this.props.closeModelMethod(this.props.modelList[6]);
-                            this.props.AddTheFlagToListMethod(this.props.user.data.username, this.props.user.password, this.props.activeProduct.product, this.state)
+                            this.props.AddTheFlagToListMethod(this.props.user.user.data.username, this.props.user.user.password, this.props.activeProduct.product, this.state)
                         }
                     }]}
                     wrapProps={{ onTouchStart: onWrapTouchStart }}
