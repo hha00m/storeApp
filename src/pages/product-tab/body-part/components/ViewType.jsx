@@ -1,5 +1,5 @@
 import React from "react";
-import {  SegmentedControl, View, WhiteSpace } from 'antd-mobile';
+import { WingBlank, SegmentedControl, View, WhiteSpace } from 'antd-mobile';
 import Grid from "./GridView";
 import List from "./ListView";
 import { AppstoreOutlined, BarsOutlined } from '@ant-design/icons'
@@ -26,11 +26,12 @@ class ViewType extends React.Component {
         return (
             <View>
                 {this.props.showStyleBar.show ?
-                    <SegmentedControl
+                    <WingBlank><SegmentedControl
                         values={[<BarsOutlined style={{ fontSize: '22px' }} />, <AppstoreOutlined style={{ fontSize: '22px' }} />]}
                         onChange={this.onChange}
                         onValueChange={this.onValueChange}
                     />
+                    </WingBlank>
                     : ''}
 
                 <WhiteSpace size='lg' />

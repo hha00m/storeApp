@@ -1,17 +1,18 @@
 import React from 'react';
 import { SearchBar } from 'antd-mobile';
 import './../../style.css';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import {searchForInfoMethod} from './../../store/actions/index'
 
 class Search extends React.Component {
-  state = {
-    value: 'بحث',
-  };
+
  
   onSubmit= (value) => {
-    this.setState({ value });
+    this.props.searchForInfoMethod(value);
   };
   clear = () => {
-    this.setState({ value: '' });
+    this.props.searchForInfoMethod('');
   };
   handleClick = () => {
     this.manualFocusInst.focus();
@@ -27,4 +28,15 @@ class Search extends React.Component {
   }
 }
 
-export default Search;
+function mapStateToProps(state) {
+  return {
+      searchForInfo: state.searchForInfo,
+  }
+}
+function matchDispatchToProps(dispatch) {
+  return bindActionCreators(
+      {
+        searchForInfoMethod: searchForInfoMethod,
+      }, dispatch);
+}
+export default connect(mapStateToProps, matchDispatchToProps)(Search);

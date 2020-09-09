@@ -4,7 +4,7 @@ import {API} from '../../../../config'
 export function fetchingProductsMethod(
   username,
   password,
-  // search = "",
+   search = "",
   // flag = "",
   pageIndex = 1,
   // limit = 20,
@@ -15,7 +15,7 @@ export function fetchingProductsMethod(
   return function (dispatch) {
     let url = `${API}/_products.php?username=${username}&password=${password}&limit=10&page=${pageIndex}`;
     //  let url = `http://localhost:8050/api/products?username=07822816693&password=12345678&limit=10&page=${pageIndex}`;
-    // if (search) url += `&search=${search}`;
+    if (search) url += `&search=${search}`;
     // if (flag) url += `&flagList=${flag}`;
     // if (category) url += `&category=${category}`;
     if (navigator.onLine) {
@@ -82,6 +82,12 @@ export const showSearchBar = (val) => {
 export const showStyleBarMethod = (val) => {
   return {
     type: "SHOW_STYLE_BAR",
+    payload: val,
+  };
+};
+export const searchForInfoMethod = (val) => {
+  return {
+    type: "SEARCH_FOR_INFO",
     payload: val,
   };
 };

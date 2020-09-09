@@ -17,6 +17,7 @@ import actionsOnBaskets from "../pages/models/store/reducer/actions-model-reduce
 import orders from "../pages/orders-tab/store/reducer/orders";
 import searchBarState from "../pages/product-tab/store/reducer/searchBarReducer";
 import showStyleBar from "../pages/product-tab/store/reducer/showDisplayStyleReducer";
+import searchForInfo from "../pages/product-tab/store/reducer/searchForInfo";
 const allReducers = combineReducers({
   cities: citiesReducer,
   activeCity: activeCityReducer,
@@ -35,6 +36,7 @@ const allReducers = combineReducers({
   newBasket: newBasket,
   logout: logout,
   searchBarState:searchBarState,
+  searchForInfo:searchForInfo,
   showStyleBar:showStyleBar,
 });
 export default allReducers;
