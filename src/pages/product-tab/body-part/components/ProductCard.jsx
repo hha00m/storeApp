@@ -73,6 +73,7 @@ const ProductCard = (props) => {
                                 onClick={() => { onPressedButton(props.modelList[1]) }}
                             >شراء</Button>
                         </Flex>
+                        {obj.attribute?
                         <View>
                             <span>{obj.attribute[0].name}:</span>
                             {
@@ -89,7 +90,7 @@ const ProductCard = (props) => {
                                         </Flex>)
                                 })
                             }
-                        </View>
+                        </View>:''}
                     </View>
                 </View>
             </SwipeAction>

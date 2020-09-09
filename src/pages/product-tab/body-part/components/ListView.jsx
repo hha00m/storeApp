@@ -41,10 +41,11 @@ class Body extends React.Component {
     }
   }
   componentDidUpdate() {
-    if (this.props.searchForInfo.data && this.state.search !== this.props.searchForInfo.data) {
-      this.props.fetchingProducts(this.props.user.user.user.data.username, this.props.user.user.user.password, this.props.searchForInfo.data, 1, 10, this._data, false);
-      this.setState({ ...this.state, search: this.props.searchForInfo.data });
+    if (this.state.search !== this.props.searchForInfo.data) {
       pageIndex = 0;
+      this._data = [];
+      this.props.fetchingProducts(this.props.user.user.user.data.username, this.props.user.user.user.password, this.props.searchForInfo.data, pageIndex, 10, this._data, false);
+      this.setState({ ...this.state, search: this.props.searchForInfo.data });
     }
     // console.log(this.props.products.products);
     if (this.props.products.fetched && !this.props.products.fetching) {
