@@ -1,5 +1,5 @@
 import React from "react";
-import { Picker, View, List, SearchBar } from 'antd-mobile';
+import { Picker, View, List, InputItem } from 'antd-mobile';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { activeTownMethod, activeCityMethod, fetchingCitiesMethod } from '../../../store/baskets/actions/index';
@@ -57,13 +57,13 @@ class CitiesModel extends React.Component {
                     </Picker>
                     <Picker
                         title={
-                            <SearchBar
-                                style={{ width: '150px'  }}
-                                onChange={this.onFilter.bind(this)}
-                                onClear={value => console.log(value, 'onClear')}
-                                value={this.state.search}
-                                cancelText="مسح"
+                            <InputItem
+                                style={{ width: '150px' ,direction: "rtl", paddingLeft: "8px", paddingRight: "8px" }}
 
+                                onChange={this.onFilter.bind(this)}
+                                clear
+                                type="text"
+                                value={this.state.search}
                             />}
                         data={townsList}
                         extra={(this.props.activeTown.label ? this.props.activeTown.label : (this.props.selectedBasket.town_name ? this.props.selectedBasket.town_name : 'أختر منطقة'))}

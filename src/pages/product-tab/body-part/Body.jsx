@@ -1,10 +1,10 @@
 import React from "react";
 import Models from '../../models/Models';
 import ViewType from '../body-part/components/ViewType';
-import {View } from "antd-mobile";
+import { View } from "antd-mobile";
 
 
-const Body = () => {
+const Body = (props) => {
     return (
         <View>
             <Models />

@@ -73,3 +73,15 @@ export function productDetails(user, productId) {
       });
   };
 }
+export const showSearchBar = (val) => {
+  return {
+    type: "SHOW_SEARCH_BAR",
+    payload: val,
+  };
+};
+export const showStyleBarMethod = (val) => {
+  return {
+    type: "SHOW_STYLE_BAR",
+    payload: val,
+  };
+};

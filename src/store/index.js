@@ -15,6 +15,8 @@ import userLogin from "./../user/store-singin/reducers/singin-reducer";
 import logout from "./../user/store-singin/reducers/singout-reducer";
 import actionsOnBaskets from "../pages/models/store/reducer/actions-model-reducer";
 import orders from "../pages/orders-tab/store/reducer/orders";
+import searchBarState from "../pages/product-tab/store/reducer/searchBarReducer";
+import showStyleBar from "../pages/product-tab/store/reducer/showDisplayStyleReducer";
 const allReducers = combineReducers({
   cities: citiesReducer,
   activeCity: activeCityReducer,
@@ -32,5 +34,7 @@ const allReducers = combineReducers({
   orders: orders,
   newBasket: newBasket,
   logout: logout,
+  searchBarState:searchBarState,
+  showStyleBar:showStyleBar,
 });
 export default allReducers;
