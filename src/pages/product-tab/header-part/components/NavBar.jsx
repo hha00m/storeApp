@@ -9,9 +9,10 @@ class Nav extends React.Component {
             <NavBar
                 mode="light"
                 rightContent={[
-                    <Icon key="0" type="search" style={{ marginRight: '16px' }}
+                    <Icon key="0" type="search" style={{ marginRight: '16px',color:this.props.searchBarState.show?'#f50':'#108ee9' }}
                         onClick={() => this.props.searchBarState.show ? this.props.showSearchBar(false) : this.props.showSearchBar(true)} />,
                     <Icon key="1" type="ellipsis"
+                    style={{ color:this.props.showStyleBar.show?'#f50':'#108ee9' }}
                         onClick={() => this.props.showStyleBar.show ? this.props.showStyleBarMethod(false) : this.props.showStyleBarMethod(true)} />,
                 ]}            >
                 المخزن

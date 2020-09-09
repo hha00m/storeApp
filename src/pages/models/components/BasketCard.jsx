@@ -104,7 +104,6 @@ const BasketCard = (props) => {
                             <View>
                                 {
                                     props.basketById.basket.items.map((value, index) =>
-
                                         <List.Item>
                                             <Flex key={index} style={{ direction: "rtl" }} justify="between">
                                                 <span style={{ Flex: '7' }}>  {value.sub_name}  </span>
@@ -120,7 +119,6 @@ const BasketCard = (props) => {
                                                 </View>
                                             </Flex>
                                         </List.Item>
-
                                     )}
                             </View> : ''
                         }
