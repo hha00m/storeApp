@@ -13,7 +13,7 @@ export default function (
       return { ...state, fetching: true };
     }
     case "FETCH_PRODUCS_REJECTED": {
-      return { ...state, fetching: false,fetched: true, error: action.payload };
+      return { ...state, fetching: false,fetched: false, error: action.payload };
     }
     case "FETCH_PRODUCTS_FULFILLED": {
       return {
