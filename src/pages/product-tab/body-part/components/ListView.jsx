@@ -12,15 +12,16 @@ let pageIndex = 1;
 class Body extends React.Component {
   constructor(props) {
     super(props);
-    this.props.fetchingProducts(this.props.user.user.user.data.username, this.props.user.user.user.password,this.props.searchForInfo.data ,pageIndex,10,this._data,false);
+    this.props.fetchingProducts(this.props.user.user.user.data.username, this.props.user.user.user.password, this.props.searchForInfo.data, pageIndex, 10, this._data, false);
 
     const ds = new ListView.DataSource({
       rowHasChanged: (row1, row2) => row1 !== row2,
     });
     this.state = {
+      search: '',
       dataSource: ds.cloneWithRows([]),
       isLoading: true,
-      height: (document.documentElement.clientHeight * 3) / 4
+      height: (document.documentElement.clientHeight * 3) / 4,
     };
   }
   _data = [];
@@ -40,11 +41,13 @@ class Body extends React.Component {
     }
   }
   componentDidUpdate() {
-    if (this.props.searchForInfo.data)
-    this.props.fetchingProducts(this.props.user.user.user.data.username, this.props.user.user.user.password,this.props.searchForInfo.data ,pageIndex,10,this._data,false);
-
+    if (this.props.searchForInfo.data && this.state.search !== this.props.searchForInfo.data) {
+      this.props.fetchingProducts(this.props.user.user.user.data.username, this.props.user.user.user.password, this.props.searchForInfo.data, 1, 10, this._data, false);
+      this.setState({ ...this.state, search: this.props.searchForInfo.data });
+      pageIndex = 0;
+    }
     // console.log(this.props.products.products);
-    if (this.props.products.fetched&&!this.props.products.fetching) {
+    if (this.props.products.fetched && !this.props.products.fetching) {
       this._onDataArrived(this.props.products.products);
     }
   }
@@ -61,7 +64,7 @@ class Body extends React.Component {
     }
     this.setState({ isLoading: true });
     ++pageIndex;
-    this.props.fetchingProducts(this.props.user.user.user.data.username, this.props.user.user.user.password,this.props.searchForInfo.data ,pageIndex,10,this._data,false);
+    this.props.fetchingProducts(this.props.user.user.user.data.username, this.props.user.user.user.password, this.props.searchForInfo.data, pageIndex, 10, this._data, false);
 
     console.log("reach end", event);
   };
