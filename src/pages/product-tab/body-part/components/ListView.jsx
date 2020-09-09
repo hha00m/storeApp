@@ -12,7 +12,7 @@ let pageIndex = 1;
 class Body extends React.Component {
   constructor(props) {
     super(props);
-    this.props.fetchingProducts(this.props.user.user.user.data.username, this.props.user.user.user.password,this.props.searchForInfo.data ,pageIndex, this._data);
+    this.props.fetchingProducts(this.props.user.user.user.data.username, this.props.user.user.user.password,this.props.searchForInfo.data ,pageIndex,10,this._data,false);
 
     const ds = new ListView.DataSource({
       rowHasChanged: (row1, row2) => row1 !== row2,
@@ -41,7 +41,7 @@ class Body extends React.Component {
   }
   componentDidUpdate() {
     if (this.props.searchForInfo.data)
-      this.props.fetchingProducts(this.props.user.user.user.data.username, this.props.user.user.user.password,this.props.searchForInfo.data ,pageIndex, this._data);
+    this.props.fetchingProducts(this.props.user.user.user.data.username, this.props.user.user.user.password,this.props.searchForInfo.data ,pageIndex,10,this._data,false);
 
     // console.log(this.props.products.products);
     if (this.props.products.fetched&&!this.props.products.fetching) {
@@ -61,7 +61,7 @@ class Body extends React.Component {
     }
     this.setState({ isLoading: true });
     ++pageIndex;
-    this.props.fetchingProducts(this.props.user.user.user.data.username, this.props.user.user.user.password, pageIndex, this._data);
+    this.props.fetchingProducts(this.props.user.user.user.data.username, this.props.user.user.user.password,this.props.searchForInfo.data ,pageIndex,10,this._data,false);
 
     console.log("reach end", event);
   };

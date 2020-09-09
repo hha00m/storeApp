@@ -7,13 +7,13 @@ export function fetchingProductsMethod(
    search = "",
   // flag = "",
   pageIndex = 1,
-  // limit = 20,
+   limit = 20,
   // category = "",
   data = [],
   update = false
 ) {
   return function (dispatch) {
-    let url = `${API}/_products.php?username=${username}&password=${password}&limit=10&page=${pageIndex}`;
+    let url = `${API}/_products.php?username=${username}&password=${password}&limit=${limit}&page=${pageIndex}`;
     //  let url = `http://localhost:8050/api/products?username=07822816693&password=12345678&limit=10&page=${pageIndex}`;
     if (search) url += `&search=${search}`;
     // if (flag) url += `&flagList=${flag}`;
