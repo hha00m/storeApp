@@ -19,7 +19,7 @@ const GridView = (props) => {
   }
 
 
- const onEndReached = event => {
+  const onEndReached = event => {
     setLoading(true);
     ++pageIndex;
     props.fetchingProducts(props.user.user.user.data.username, props.user.user.user.password, pageIndex, _data);
@@ -48,7 +48,7 @@ const GridView = (props) => {
         square={false} className="not-square-grid"
         renderItem={dataItem => (
           <View style={{ padding: '0.5px' }}>
-            <img src={`https://albarqexpress.com/store/img/product/${dataItem.img}`} style={{ width: '70px', height: '100px' }} alt="" />
+            <img src={`https://aljade.com/store/img/product/${dataItem.img}`} style={{ width: '70px', height: '100px' }} alt="" />
             <View style={{ color: '#888', fontSize: '14px', marginTop: '0px' }}>
               <span>{dataItem.name}</span>
             </View>

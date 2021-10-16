@@ -50,7 +50,7 @@ const ProductCard = (props) => {
 
                 <View style={{ display: 'flex', padding: '10px 0', direction: "rtl" }}>
                     <img style={{ height: '120px', width: '90px', marginLeft: '5px', borderRadius: '5px' }}
-                        src={`https://albarqexpress.com/store/img/product/${obj.img}`} alt="" />
+                        src={`https://aljade.com/store/img/product/${obj.img}`} alt="" />
                     <View style={{ lineHeight: 1, width: "100%" }} className="flex-container">
                         <View style={{ marginBottom: '8px', fontWeight: 'bold' }}>{obj.name}
                             <Badge text="شعار"
@@ -73,24 +73,24 @@ const ProductCard = (props) => {
                                 onClick={() => { onPressedButton(props.modelList[1]) }}
                             >شراء</Button>
                         </Flex>
-                        {obj.attribute?
-                        <View>
-                            <span>{obj.attribute[0].name}:</span>
-                            {
-                                (obj.attribute).map((v, i) => {
-                                    return (
-                                        <Flex wrap="wrap" key={i} className="tag-container" >
-                                            {
-                                                (v.config).map((option, index) =>
-                                                    <Tag key={index}
-                                                        selected={(props.activeProduct.options ? props.activeProduct.options.id === option.id : false) && props.activeProduct.product.id === obj.id}
-                                                        onChange={() => props.activeProductMethod(obj, option)}
-                                                    >{option.value}</Tag>
-                                                )}
-                                        </Flex>)
-                                })
-                            }
-                        </View>:''}
+                        {obj.attribute ?
+                            <View>
+                                <span>{obj.attribute[0].name}:</span>
+                                {
+                                    (obj.attribute).map((v, i) => {
+                                        return (
+                                            <Flex wrap="wrap" key={i} className="tag-container" >
+                                                {
+                                                    (v.config).map((option, index) =>
+                                                        <Tag key={index}
+                                                            selected={(props.activeProduct.options ? props.activeProduct.options.id === option.id : false) && props.activeProduct.product.id === obj.id}
+                                                            onChange={() => props.activeProductMethod(obj, option)}
+                                                        >{option.value}</Tag>
+                                                    )}
+                                            </Flex>)
+                                    })
+                                }
+                            </View> : ''}
                     </View>
                 </View>
             </SwipeAction>
